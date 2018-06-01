@@ -1,0 +1,38 @@
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
+#include <QMainWindow>
+
+namespace Ui {
+class MainWindow;
+}
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
+
+
+private slots:
+
+    void on_login_clicked();
+
+    void setLabelConnectDB(); //change the text in the DB connect dialog to show status of connection
+
+    void on_buttonLogout_clicked(); //logout button on admin screen
+
+    void on_buttonLogout_2_clicked(); //logout button on user screen
+
+    void on_buttonLogin_clicked(); //start login button
+
+private:
+    Ui::MainWindow *ui;
+
+};
+
+
+
+#endif // MAINWINDOW_H
