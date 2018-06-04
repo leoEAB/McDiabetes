@@ -45,10 +45,15 @@ private slots:
     //PAGE 3 - User screen
     void on_buttonNewOrder_clicked(); //new order for user
     void on_buttonShowPrevOrders_clicked(); //show previous orders for this user
+    void on_buttonUserInfo_clicked(); //user info + editing
+
 
     //PAGE 4 - New user
     void on_buttonClearUserFields_clicked(); //clear fields
     void on_buttonSubmitNewUser_clicked(); //submit new user information
+
+
+    void on_checkBoxEditUserInfo_stateChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

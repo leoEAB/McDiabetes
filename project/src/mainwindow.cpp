@@ -209,6 +209,35 @@ void MainWindow::on_buttonShowPrevOrders_clicked()
     //set the page to the all previous orders page
     ui->stackedWidgetUser->setCurrentIndex(1);
 }
+
+void MainWindow::on_buttonUserInfo_clicked()
+{
+    //firstly, show the frame!
+    ui->stackedWidgetUser->setHidden(false);
+    //set the page to the all previous orders page
+    ui->stackedWidgetUser->setCurrentIndex(2);
+}
+
+void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
+{
+    if(ui->checkBoxEditUserInfo->isChecked() || arg1) {
+        ui->lineCityName_2->setEnabled(true);
+        ui->lineCityPLZ_2->setEnabled(true);
+        ui->lineEmail_2->setEnabled(true);
+        ui->lineNameFirst_2->setEnabled(true);
+        ui->lineNameLast_2->setEnabled(true);
+        ui->lineStreetName_2->setEnabled(true);
+        ui->lineStreetNumber_2->setEnabled(true);
+    } else {
+        ui->lineCityName_2->setEnabled(false);
+        ui->lineCityPLZ_2->setEnabled(false);
+        ui->lineEmail_2->setEnabled(false);
+        ui->lineNameFirst_2->setEnabled(false);
+        ui->lineNameLast_2->setEnabled(false);
+        ui->lineStreetName_2->setEnabled(false);
+        ui->lineStreetNumber_2->setEnabled(false);
+    }
+}
 //-------------------------------------------------
 
 
