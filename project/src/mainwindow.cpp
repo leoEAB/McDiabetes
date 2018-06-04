@@ -7,10 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //hide table at beginning
-    ui->tableListAll->hide();
-
-
     //initialize database first before calling methods!!!!!!!!!!!!!
     db = new Database();
 
@@ -23,38 +19,52 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_buttonLoginStart_clicked()
-{
-    ui->stackedWidget->setCurrentIndex(1);
-}
-
+//"global" functions (signals from other buttons call this func)
 void MainWindow::on_buttonLogout_clicked()
 {
-    //logout function
-    //something to disconnect mysql
+    //close the connection
+    db->closeC();
 
+    //disable ui
+    ui->labelConnectDB->clear();
+    ui->formFrame_2->setEnabled(false);
+    ui->buttonNewUser->setEnabled(false);
+    ui->buttonLoginStart->setEnabled(false);
+
+
+    //return to first page
     ui->stackedWidget->setCurrentIndex(0);
 }
 
-void MainWindow::on_buttonLogout_2_clicked()
+void MainWindow::on_buttonPrevious_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    int pageIndex = ui->stackedWidget->currentIndex();
+    ui->stackedWidget->setCurrentIndex(pageIndex - 1);
+    ui->stackedWidget->update();
+
 }
+//----------------------------------------------
 
-void MainWindow::on_buttonLogin_clicked()
+
+//PAGE DB INFO & CONNECT -----------------------
+void MainWindow::on_checkBox_stateChanged(int arg1)
 {
+    if(ui->checkBox->isChecked() || arg1) {
+        ui->buttonConnectDB->setEnabled(true);
+        ui->lineDatenbankName->setEnabled(true);
+        ui->lineServerDB->setEnabled(true);
+        ui->linePortDB->setEnabled(true);
+        ui->lineUserDB->setEnabled(true);
+        ui->linePassDB->setEnabled(true);
+    } else {
+        ui->buttonConnectDB->setEnabled(false);
+        ui->lineDatenbankName->setEnabled(false);
+        ui->lineServerDB->setEnabled(false);
+        ui->linePortDB->setEnabled(false);
+        ui->lineUserDB->setEnabled(false);
+        ui->linePassDB->setEnabled(false);
+    }
 
-    QString usernameString = ui->lineUser->text(); //read from username field
-    QString passwordString = ui->linePass->text(); //read from password field
-
-    if (db->authorizeUser(usernameString, passwordString)) {
-        if(!(db->isAdmin(usernameString))){ //always admin when isadmin returns false //FIX
-             ui->stackedWidget->setCurrentIndex(2);
-        } else {
-            ui->stackedWidget->setCurrentIndex(3);
-        }
-
-    };
 }
 
 void MainWindow::on_buttonConnectDB_clicked()
@@ -104,50 +114,38 @@ bool MainWindow::isConnected() {
     }
 }
 
+void MainWindow::on_buttonLoginStart_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
 void MainWindow::on_buttonNewUser_clicked()
 {
     ui->stackedWidget->setCurrentIndex(4);
 }
+//----------------------------------------------
 
-void MainWindow::on_checkBox_stateChanged(int arg1)
+
+//LOGIN SCREEN----------------------------------
+void MainWindow::on_buttonLogin_clicked()
 {
-    if(ui->checkBox->isChecked() || arg1) {
-        ui->buttonConnectDB->setEnabled(true);
-        ui->lineDatenbankName->setEnabled(true);
-        ui->lineServerDB->setEnabled(true);
-        ui->linePortDB->setEnabled(true);
-        ui->lineUserDB->setEnabled(true);
-        ui->linePassDB->setEnabled(true);
-    } else {
-        ui->buttonConnectDB->setEnabled(false);
-        ui->lineDatenbankName->setEnabled(false);
-        ui->lineServerDB->setEnabled(false);
-        ui->linePortDB->setEnabled(false);
-        ui->lineUserDB->setEnabled(false);
-        ui->linePassDB->setEnabled(false);
-    }
 
+    QString usernameString = ui->lineUser->text(); //read from username field
+    QString passwordString = ui->linePass->text(); //read from password field
+
+    if (db->authorizeUser(usernameString, passwordString)) {
+        if(!(db->isAdmin(usernameString))){ //always admin when isadmin returns false //FIX
+             ui->stackedWidget->setCurrentIndex(2);
+        } else {
+            ui->stackedWidget->setCurrentIndex(3);
+        }
+
+    };
 }
+//----------------------------------------------
 
-void MainWindow::on_buttonClearUserFields_clicked()
-{
-    ui->lineNameFirst->clear();
-    ui->lineNameLast->clear();
-    ui->lineEmail->clear();
-    ui->lineStreetName->clear();
-    ui->lineStreetNumber->clear();
-    ui->lineCityName->clear();
-    ui->lineCityPLZ->clear();
 
-}
-
-void MainWindow::on_buttonPrevious_clicked()
-{
-    int pageIndex = ui->stackedWidget->currentIndex();
-    ui->stackedWidget->setCurrentIndex(pageIndex - 1);
-    ui->stackedWidget->update();
-}
-
+//ADMIN SCREEN ---------------------------------
 void MainWindow::on_buttonListAllMenu_clicked()
 {
     if(ui->tableListAll->isHidden()){
@@ -174,7 +172,10 @@ void MainWindow::on_buttonListUsers_clicked()
 
     db->listAllUsers(ui->tableListAll);
 }
+//-------------------------------------------------
 
+
+//USER SCREEN ----------------------------------
 void MainWindow::on_buttonNewOrder_clicked()
 {
 
@@ -184,8 +185,24 @@ void MainWindow::on_buttonShowPrevOrders_clicked()
 {
 
 }
+//-------------------------------------------------
+
+
+//NEW USER SCREEN-------------------------------
+void MainWindow::on_buttonClearUserFields_clicked()
+{
+    ui->lineNameFirst->clear();
+    ui->lineNameLast->clear();
+    ui->lineEmail->clear();
+    ui->lineStreetName->clear();
+    ui->lineStreetNumber->clear();
+    ui->lineCityName->clear();
+    ui->lineCityPLZ->clear();
+
+}
 
 void MainWindow::on_buttonSubmitNewUser_clicked()
 {
 
 }
+//----------------------------------------------

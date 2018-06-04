@@ -39,12 +39,12 @@ private slots:
     void on_buttonListAllMenu_clicked(); //list all menu items
     void on_buttonListOrders_clicked(); //list all orders so far
     void on_buttonListUsers_clicked(); //list all users
+    //global logout func
     void on_buttonLogout_clicked(); //logout button on admin screen
 
     //PAGE 3 - User screen
     void on_buttonNewOrder_clicked(); //new order for user
     void on_buttonShowPrevOrders_clicked(); //show previous orders for this user
-    void on_buttonLogout_2_clicked(); //logout button on user screen
 
     //PAGE 4 - New user
     void on_buttonClearUserFields_clicked(); //clear fields

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>721</width>
-    <height>468</height>
+    <width>837</width>
+    <height>575</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,24 +25,24 @@
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>701</width>
-      <height>401</height>
+      <width>821</width>
+      <height>511</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="page0">
      <widget class="QWidget" name="formLayoutWidget">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>230</y>
+        <x>220</x>
+        <y>280</y>
         <width>381</width>
-        <height>151</height>
+        <height>179</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout">
@@ -90,9 +90,9 @@
      <widget class="QWidget" name="formLayoutWidget_3">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>10</y>
-        <width>301</width>
+        <x>270</x>
+        <y>60</y>
+        <width>281</width>
         <height>219</height>
        </rect>
       </property>
@@ -209,6 +209,22 @@
          </property>
         </widget>
        </item>
+       <item row="6" column="0" colspan="2">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>5</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="8" column="0" colspan="2">
         <widget class="QLabel" name="labelConnectDB">
          <property name="enabled">
@@ -227,22 +243,6 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0" colspan="2">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>5</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </widget>
     </widget>
@@ -253,9 +253,9 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>200</x>
-        <y>40</y>
-        <width>291</width>
+        <x>260</x>
+        <y>150</y>
+        <width>301</width>
         <height>161</height>
        </rect>
       </property>
@@ -301,6 +301,12 @@
            <width>175</width>
            <height>25</height>
           </size>
+         </property>
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -349,7 +355,7 @@
        <rect>
         <x>0</x>
         <y>10</y>
-        <width>701</width>
+        <width>821</width>
         <height>52</height>
        </rect>
       </property>
@@ -393,6 +399,31 @@
          </property>
         </widget>
        </item>
+      </layout>
+     </widget>
+     <widget class="QTableView" name="tableListAll">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>70</y>
+        <width>821</width>
+        <height>391</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>470</y>
+        <width>221</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QPushButton" name="buttonLogout">
          <property name="text">
@@ -409,31 +440,18 @@
        </item>
       </layout>
      </widget>
-     <widget class="QTableView" name="tableListAll">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>70</y>
-        <width>701</width>
-        <height>341</height>
-       </rect>
-      </property>
-     </widget>
     </widget>
     <widget class="QWidget" name="page3_user">
      <widget class="QWidget" name="verticalLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>20</y>
-        <width>331</width>
-        <height>241</height>
+        <x>0</x>
+        <y>10</y>
+        <width>821</width>
+        <height>52</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QPushButton" name="buttonNewOrder">
          <property name="minimumSize">
@@ -443,7 +461,7 @@
           </size>
          </property>
          <property name="text">
-          <string>New Order</string>
+          <string>Start a new Order</string>
          </property>
         </widget>
        </item>
@@ -456,7 +474,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Show all previous Orders</string>
+          <string>Show Previous Orders</string>
          </property>
         </widget>
        </item>
@@ -483,7 +501,7 @@
        <rect>
         <x>90</x>
         <y>130</y>
-        <width>521</width>
+        <width>641</width>
         <height>161</height>
        </rect>
       </property>
@@ -598,9 +616,9 @@
      <widget class="QWidget" name="horizontalLayoutWidget">
       <property name="geometry">
        <rect>
-        <x>89</x>
+        <x>459</x>
         <y>299</y>
-        <width>521</width>
+        <width>271</width>
         <height>31</height>
        </rect>
       </property>
@@ -642,7 +660,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>721</width>
+     <width>837</width>
      <height>21</height>
     </rect>
    </property>
@@ -721,6 +739,38 @@
     <hint type="destinationlabel">
      <x>360</x>
      <y>233</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>linePass</sender>
+   <signal>returnPressed()</signal>
+   <receiver>buttonLogin</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>457</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>435</x>
+     <y>178</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonLogout_2</sender>
+   <signal>clicked()</signal>
+   <receiver>buttonLogout</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>517</x>
+     <y>88</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>664</x>
+     <y>538</y>
     </hint>
    </hints>
   </connection>

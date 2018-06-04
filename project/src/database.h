@@ -46,15 +46,19 @@ public:
         return db.open();
     }
 
+    void closeC() {
+        db.close();
+    }
+
     bool authorizeUser(QString username, QString password) {
 
             QSqlQuery queryUser;
             QSqlQuery queryPassword;
 
-            queryUser.prepare(QString("select userName from users where userName = :userName"));
+            queryUser.prepare(QString("SELECT userName FROM users WHERE userName = :userName"));
             queryUser.bindValue(":userName", username);
 
-            queryPassword.prepare(QString("select userPassword from users where userPassword = :userPassword"));
+            queryPassword.prepare(QString("SELECT userPassword FROM users WHERE userPassword = :userPassword"));
             queryPassword.bindValue(":userPassword", password);
 
             if(queryPassword.exec() && queryUser.exec()) {
@@ -76,14 +80,18 @@ public:
 
         QSqlQueryModel *tableViewModel = new QSqlQueryModel;
                                    //ALL MENU ITEMS
-        tableViewModel->setQuery("SELECT piece_name, nn, status FROM main WHERE nn !='0' ORDER BY uid");
+        tableViewModel->setQuery("SELECT category, type, name, size, price FROM items");
 
-        tableViewModel->setHeaderData(0, Qt::Horizontal, "Piece Name");
-        tableViewModel->setHeaderData(1, Qt::Horizontal, "NN");
-        tableViewModel->setHeaderData(2, Qt::Horizontal, "Status");
+        tableViewModel->setHeaderData(0, Qt::Horizontal, "Category");
+        tableViewModel->setHeaderData(1, Qt::Horizontal, "Type");
+        tableViewModel->setHeaderData(2, Qt::Horizontal, "Name");
+        tableViewModel->setHeaderData(3, Qt::Horizontal, "Size");
+        tableViewModel->setHeaderData(4, Qt::Horizontal, "price");
 
         table->setModel(tableViewModel);
-        table->resizeColumnsToContents();
+        table->resizeRowsToContents();
+        table->resizeRowsToContents();
+        table->resizeColumnToContents(2);
         table->setAlternatingRowColors(true);
     }
 
@@ -106,7 +114,7 @@ public:
         QSqlQueryModel *tableViewModel = new QSqlQueryModel;
 
                                    //ALL USERS
-        tableViewModel->setQuery("SELECT piece_name, nn, status FROM main WHERE nn !='0' ORDER BY uid");
+        tableViewModel->setQuery("SELECT  FROM main WHERE nn !='0' ORDER BY uid");
 
         tableViewModel->setHeaderData(0, Qt::Horizontal, "Piece Name");
         tableViewModel->setHeaderData(1, Qt::Horizontal, "NN");
@@ -116,7 +124,6 @@ public:
         table->resizeColumnsToContents();
         table->setAlternatingRowColors(true);
     }
-
 
 
 private:
