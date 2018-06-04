@@ -12,6 +12,10 @@
 //show tables
 #include <QTableView>
 
+//throw messageBox if login is unsuccessful
+#include <QMessageBox>
+
+
 class Database
 {
 public:
@@ -52,28 +56,42 @@ public:
 
     bool authorizeUser(QString username, QString password) {
 
-            QSqlQuery queryUser;
-            QSqlQuery queryPassword;
+            QSqlQuery queryLogin = QSqlQuery(db);
 
-            queryUser.prepare(QString("SELECT userName FROM users WHERE userName = :userName"));
-            queryUser.bindValue(":userName", username);
+            queryLogin.prepare("SELECT userName, userPassword FROM users WHERE userName = :userName and userPassword = :userPassword");
+            queryLogin.bindValue(":userName", username);
+            queryLogin.bindValue(":userPassword", password);
+            queryLogin.exec();
 
-            queryPassword.prepare(QString("SELECT userPassword FROM users WHERE userPassword = :userPassword"));
-            queryPassword.bindValue(":userPassword", password);
-
-            if(queryPassword.exec() && queryUser.exec()) {
-                return true;
+            while(queryLogin.next()) {
+                if(queryLogin.value(0).toString() == username && queryLogin.value(1).toString() == password){
+                    return true;
+                }
             }
             return false;
+
     }
 
     bool isAdmin(QString username){
-        /*
+        QString type = "a";
+        bool finalResult;
+
         QSqlQuery queryAdmin;
-        queryAdmin.prepare();
-        queryAdmin.bindValue();
-        */
-        return false;
+
+        queryAdmin.prepare("SELECT userName, userType FROM users AS u WHERE u.userName = :userName and u.userType = :userType ");
+        queryAdmin.bindValue(":userName", username);
+        queryAdmin.bindValue(":userType", type);
+        queryAdmin.exec();
+
+        while(queryAdmin.next()) {
+            if(queryAdmin.value(0).toString() == username && queryAdmin.value(1).toString() == type){
+                finalResult = true;
+            } else {
+                finalResult = false;
+            }
+        }
+
+        return finalResult;
     }
 
     void listAllItems(QTableView *table) {

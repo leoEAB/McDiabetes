@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //set newOrderFrame to invisible at first
+    ui->stackedWidgetUser->setHidden(true);
+
     //initialize database first before calling methods!!!!!!!!!!!!!
     db = new Database();
 
@@ -22,6 +25,13 @@ MainWindow::~MainWindow()
 //"global" functions (signals from other buttons call this func)
 void MainWindow::on_buttonLogout_clicked()
 {
+    /*  maybe this is too radical,
+     *  maybe it should return the user only to the login screen
+     *  instead of closing the database connection as well
+     *
+    */
+
+
     //close the connection
     db->closeC();
 
@@ -30,7 +40,6 @@ void MainWindow::on_buttonLogout_clicked()
     ui->formFrame_2->setEnabled(false);
     ui->buttonNewUser->setEnabled(false);
     ui->buttonLoginStart->setEnabled(false);
-
 
     //return to first page
     ui->stackedWidget->setCurrentIndex(0);
@@ -129,18 +138,27 @@ void MainWindow::on_buttonNewUser_clicked()
 //LOGIN SCREEN----------------------------------
 void MainWindow::on_buttonLogin_clicked()
 {
-
     QString usernameString = ui->lineUser->text(); //read from username field
     QString passwordString = ui->linePass->text(); //read from password field
 
     if (db->authorizeUser(usernameString, passwordString)) {
-        if(!(db->isAdmin(usernameString))){ //always admin when isadmin returns false //FIX
-             ui->stackedWidget->setCurrentIndex(2);
+
+        if(db->isAdmin(usernameString)){
+             ui->stackedWidget->setCurrentIndex(2); //admin menu
         } else {
-            ui->stackedWidget->setCurrentIndex(3);
+            ui->stackedWidget->setCurrentIndex(3); //user menu
         }
 
+    } else {
+        QMessageBox::critical(
+          this,
+          tr("McFail"),
+          tr("Username or Password wrong")
+        );
     };
+
+    ui->linePass->clear();
+    ui->lineUser->clear();
 }
 //----------------------------------------------
 
@@ -178,12 +196,18 @@ void MainWindow::on_buttonListUsers_clicked()
 //USER SCREEN ----------------------------------
 void MainWindow::on_buttonNewOrder_clicked()
 {
-
+    //firstly, show the widget!
+    ui->stackedWidgetUser->setHidden(false);
+    //set the page to the new order page
+    ui->stackedWidgetUser->setCurrentIndex(0);
 }
 
 void MainWindow::on_buttonShowPrevOrders_clicked()
 {
-
+    //firstly, show the frame!
+    ui->stackedWidgetUser->setHidden(false);
+    //set the page to the all previous orders page
+    ui->stackedWidgetUser->setCurrentIndex(1);
 }
 //-------------------------------------------------
 
