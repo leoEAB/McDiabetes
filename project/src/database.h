@@ -9,6 +9,9 @@
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
 
+//show tables
+#include <QTableView>
+
 class Database
 {
 public:
@@ -68,6 +71,53 @@ public:
         */
         return false;
     }
+
+    void listAllItems(QTableView *table) {
+
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+                                   //ALL MENU ITEMS
+        tableViewModel->setQuery("SELECT piece_name, nn, status FROM main WHERE nn !='0' ORDER BY uid");
+
+        tableViewModel->setHeaderData(0, Qt::Horizontal, "Piece Name");
+        tableViewModel->setHeaderData(1, Qt::Horizontal, "NN");
+        tableViewModel->setHeaderData(2, Qt::Horizontal, "Status");
+
+        table->setModel(tableViewModel);
+        table->resizeColumnsToContents();
+        table->setAlternatingRowColors(true);
+    }
+
+    void listAllOrders(QTableView *table) {
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+
+                                   //ALL ORDERS
+        tableViewModel->setQuery("SELECT piece_name, nn, status FROM main WHERE nn !='0' ORDER BY uid");
+
+        tableViewModel->setHeaderData(0, Qt::Horizontal, "Piece Name");
+        tableViewModel->setHeaderData(1, Qt::Horizontal, "NN");
+        tableViewModel->setHeaderData(2, Qt::Horizontal, "Status");
+
+        table->setModel(tableViewModel);
+        table->resizeColumnsToContents();
+        table->setAlternatingRowColors(true);
+    }
+
+    void listAllUsers(QTableView *table) {
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+
+                                   //ALL USERS
+        tableViewModel->setQuery("SELECT piece_name, nn, status FROM main WHERE nn !='0' ORDER BY uid");
+
+        tableViewModel->setHeaderData(0, Qt::Horizontal, "Piece Name");
+        tableViewModel->setHeaderData(1, Qt::Horizontal, "NN");
+        tableViewModel->setHeaderData(2, Qt::Horizontal, "Status");
+
+        table->setModel(tableViewModel);
+        table->resizeColumnsToContents();
+        table->setAlternatingRowColors(true);
+    }
+
+
 
 private:
 
