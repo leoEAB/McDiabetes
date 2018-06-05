@@ -59,6 +59,7 @@ private slots:
 
 
     //PAGE 4 - New user
+    void clearNewUserInput(); //clears all the fields
     void on_buttonClearUserFields_clicked(); //clear fields
     void on_buttonSubmitNewUser_clicked(); //submit new user information
 
@@ -80,6 +81,9 @@ private slots:
     void on_buttonAddToCart_clicked();
 
     void on_pushButtonClearCart_clicked();
+
+
+    void on_buttonToLoginNewUserSuccess_clicked();
 
 private:
     Ui::MainWindow *ui;

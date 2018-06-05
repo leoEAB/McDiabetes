@@ -16,6 +16,11 @@
 #include <QMessageBox>
 
 
+//fix this cause it dont work
+const QString userDb = "userData";
+const QString userDbPlus = "userInfo";
+const QString itemsDb = "items";
+
 class Database
 {
 public:
@@ -56,9 +61,10 @@ public:
 
     bool authorizeUser(QString username, QString password) {
 
-            QSqlQuery queryLogin = QSqlQuery(db);
+            QSqlQuery queryLogin;
 
-            queryLogin.prepare("SELECT userName, userPassword FROM users WHERE userName = :userName and userPassword = :userPassword");
+            queryLogin.prepare("SELECT userName, userPassword FROM userData AS u WHERE u.userName = :userName AND u.userPassword = :userPassword");
+            //queryLogin.bindValue(":db", userDb);
             queryLogin.bindValue(":userName", username);
             queryLogin.bindValue(":userPassword", password);
             queryLogin.exec();
@@ -73,18 +79,20 @@ public:
     }
 
     bool isAdmin(QString username){
-        QString type = "a";
-        bool finalResult;
+        bool finalResult = false;
 
         QSqlQuery queryAdmin;
 
-        queryAdmin.prepare("SELECT userName, userType FROM users AS u WHERE u.userName = :userName and u.userType = :userType ");
+        QString userType = "a";
+
+        queryAdmin.prepare("SELECT userName, userType FROM userData AS u WHERE u.userName = :userName and u.userType = :userType ");
+        //queryAdmin.bindValue(":db", userDb);
         queryAdmin.bindValue(":userName", username);
-        queryAdmin.bindValue(":userType", type);
+        queryAdmin.bindValue(":userType", userType);
         queryAdmin.exec();
 
         while(queryAdmin.next()) {
-            if(queryAdmin.value(0).toString() == username && queryAdmin.value(1).toString() == type){
+            if(queryAdmin.value(0).toString() == username && queryAdmin.value(1).toString() == userType){
                 finalResult = true;
             } else {
                 finalResult = false;
@@ -132,7 +140,7 @@ public:
 
         QSqlQueryModel *tableViewModel = new QSqlQueryModel;
 
-        tableViewModel->setQuery("select UD.userName, email, firstName, lastName, street, streetNr, city from userInfo as UI RIGHT OUTER JOIN userData as UD ON (UI.userName = UD.userName)");
+        tableViewModel->setQuery("select UD.userName, email, firstName, lastName, street, streetNr, plz, city from userInfo as UI RIGHT OUTER JOIN userData as UD ON (UI.userName = UD.userName)");
 
         table->setModel(tableViewModel);
         table->resizeColumnToContents(1);
@@ -245,7 +253,7 @@ public:
         tableViewModel->setQuery(listCart);
 
         table->setModel(tableViewModel);
-        table->resizeColumnsToContents();
+        table->resizeColumnToContents(1);
         table->setAlternatingRowColors(true);
     }
 
@@ -265,6 +273,41 @@ public:
         table->setModel(tableViewModel);
     }
 
+    bool newUser(QString username, QString password,
+                 QString firstName, QString lastName,
+                 QString email, QString street,
+                 int streetNumber, QString city,
+                 QString cityPlz) {
+
+        //username & password have to be submited fist cause this table is a parent of the next one
+        QSqlQuery submitUserData; //username, password, usertype
+
+        submitUserData.prepare("INSERT INTO userData(userName, userPassword, userType) "
+                               "VALUES (:username, :password, :userType)");
+        submitUserData.bindValue(":username", username);
+        submitUserData.bindValue(":password", password);
+        submitUserData.bindValue(":userType", "u"); //all admins are already preset
+
+        //child table insertion comes now
+        QSqlQuery submitUserInfo; //full information about user
+        submitUserInfo.prepare("INSERT INTO userInfo(userName, firstName, lastName, email, street, streetNr, plz, city) "
+                               "VALUES (:username, :firstName, :lastName, :email, :street, :streetNumber, :cityPlz, :city)");
+        submitUserInfo.bindValue(":username", username);
+        submitUserInfo.bindValue(":firstName", firstName);
+        submitUserInfo.bindValue(":lastName", lastName);
+        submitUserInfo.bindValue(":email", email);
+        submitUserInfo.bindValue(":street", street);
+        submitUserInfo.bindValue(":streetNumber", streetNumber);
+        submitUserInfo.bindValue(":cityPlz", cityPlz);
+        submitUserInfo.bindValue(":city", city);
+
+        if(submitUserData.exec() && submitUserInfo.exec()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 
 
 private:

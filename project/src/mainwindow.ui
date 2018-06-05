@@ -40,7 +40,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page0">
      <widget class="QWidget" name="formLayoutWidget">
@@ -553,7 +553,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pageNewOrderUser">
        <widget class="QTabWidget" name="tabWidgetMenuUser">
@@ -1035,38 +1035,83 @@ V</string>
       <property name="geometry">
        <rect>
         <x>90</x>
-        <y>80</y>
+        <y>60</y>
         <width>641</width>
-        <height>211</height>
+        <height>321</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridRegistration">
-       <item row="4" column="1" colspan="2">
-        <widget class="QLineEdit" name="lineStreetName"/>
+       <item row="3" column="0" colspan="5">
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="labelStreetName">
+       <item row="0" column="1" colspan="2">
+        <widget class="QLineEdit" name="lineNameFirst">
+         <property name="minimumSize">
+          <size>
+           <width>205</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="labelNameLast">
          <property name="font">
           <font>
            <pointsize>10</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>Street Name:</string>
+          <string>Last Name:</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="3">
-        <widget class="QLabel" name="labelStreetNr">
+       <item row="0" column="4">
+        <widget class="QLineEdit" name="lineNameLast"/>
+       </item>
+       <item row="5" column="0" colspan="5">
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="3">
+        <widget class="QLabel" name="labelCityPLZ">
          <property name="font">
           <font>
            <pointsize>10</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>Number:</string>
+          <string>PLZ:</string>
          </property>
         </widget>
+       </item>
+       <item row="7" column="1" colspan="2">
+        <widget class="QLineEdit" name="lineCityName"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="labelCityName">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>City/Town:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="4">
+        <widget class="QLineEdit" name="lineCityPLZ"/>
+       </item>
+       <item row="6" column="4">
+        <widget class="QLineEdit" name="lineStreetNumber"/>
        </item>
        <item row="0" column="0">
         <widget class="QLabel" name="labelNameFirst">
@@ -1080,46 +1125,74 @@ V</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="4">
-        <widget class="QLineEdit" name="lineStreetNumber"/>
-       </item>
-       <item row="5" column="4">
-        <widget class="QLineEdit" name="lineCityPLZ"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="labelCityName">
+       <item row="6" column="3">
+        <widget class="QLabel" name="labelStreetNr">
          <property name="font">
           <font>
            <pointsize>10</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>City/Town:</string>
+          <string>Number:</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1" colspan="2">
-        <widget class="QLineEdit" name="lineCityName"/>
-       </item>
-       <item row="5" column="3">
-        <widget class="QLabel" name="labelCityPLZ">
+       <item row="6" column="0">
+        <widget class="QLabel" name="labelStreetName">
          <property name="font">
           <font>
            <pointsize>10</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>PLZ:</string>
+          <string>Street Name:</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1" colspan="2">
+       <item row="6" column="1" colspan="2">
+        <widget class="QLineEdit" name="lineStreetName"/>
+       </item>
+       <item row="4" column="1" colspan="2">
+        <widget class="QLineEdit" name="lineUsername"/>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLabel" name="labelPassword">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Password</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="4">
         <widget class="QLineEdit" name="lineEmail">
          <property name="minimumSize">
           <size>
            <width>275</width>
            <height>0</height>
           </size>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QLineEdit" name="linePassword">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="labelUsername">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Username:</string>
          </property>
         </widget>
        </item>
@@ -1135,60 +1208,13 @@ V</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="3">
-        <widget class="QLabel" name="labelUsername">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Username:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="4">
-        <widget class="QLineEdit" name="lineUsername"/>
-       </item>
-       <item row="3" column="0" colspan="5">
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="5">
-        <widget class="Line" name="line_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QLineEdit" name="lineNameLast"/>
-       </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="labelNameLast">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Last Name:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QLineEdit" name="lineNameFirst"/>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="horizontalLayoutWidget">
       <property name="geometry">
        <rect>
-        <x>459</x>
-        <y>299</y>
+        <x>460</x>
+        <y>400</y>
         <width>271</width>
         <height>31</height>
        </rect>
@@ -1209,6 +1235,22 @@ V</string>
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QPushButton" name="buttonToLoginNewUserSuccess">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>294</x>
+        <y>462</y>
+        <width>251</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>to Login</string>
+      </property>
      </widget>
     </widget>
    </widget>
