@@ -6,6 +6,10 @@
 //include for error box at try..catch.. statement
 #include <QMessageBox>
 
+//for the current time
+#include <QDateTime>
+
+
 #include "database.h"
 
 namespace Ui {
@@ -25,6 +29,8 @@ public:
 private slots:
     //Previous button
     void on_buttonPrevious_clicked();
+    //timeFunction
+    void updateTimeLabel();
 
     //PAGE 0
     void on_checkBox_stateChanged(int arg1); //checkbox to change database settings
@@ -54,6 +60,8 @@ private slots:
 
 
     void on_checkBoxEditUserInfo_stateChanged(int arg1);
+
+    void on_checkBoxSetTime_stateChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

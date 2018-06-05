@@ -15,6 +15,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //countdownConnect = new QTimer();
 
+    updateTimeLabel();
+}
+
+void MainWindow::updateTimeLabel(){
+    QDateTime currentTime;
+    currentTime.setTime(currentTime.currentDateTime().time());
+
+    ui->timeEditSetTime->setTime(currentTime.time());
 }
 
 MainWindow::~MainWindow()
@@ -200,6 +208,12 @@ void MainWindow::on_buttonNewOrder_clicked()
     ui->stackedWidgetUser->setHidden(false);
     //set the page to the new order page
     ui->stackedWidgetUser->setCurrentIndex(0);
+
+    db->listMains(ui->tableViewAllMains);
+    db->listSides(ui->tableViewAllSides);
+    db->listDrinks(ui->tableViewAllDrinks);
+    db->listDesserts(ui->tableViewAllDesserts);
+
 }
 
 void MainWindow::on_buttonShowPrevOrders_clicked()
@@ -238,6 +252,21 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
         ui->lineStreetNumber_2->setEnabled(false);
     }
 }
+
+void MainWindow::on_checkBoxSetTime_stateChanged(int arg1)
+{
+    if(ui->checkBoxEditUserInfo->isChecked() || arg1) {
+        ui->labelSetTime->setEnabled(true);
+        ui->timeEditSetTime->setEnabled(true);
+        ui->pushButtonSetTime->setEnabled(true);
+    } else {
+        updateTimeLabel();
+        ui->labelSetTime->setEnabled(false);
+        ui->timeEditSetTime->setEnabled(false);
+        ui->pushButtonSetTime->setEnabled(false);
+    }
+}
+
 //-------------------------------------------------
 
 
@@ -259,3 +288,4 @@ void MainWindow::on_buttonSubmitNewUser_clicked()
 
 }
 //----------------------------------------------
+

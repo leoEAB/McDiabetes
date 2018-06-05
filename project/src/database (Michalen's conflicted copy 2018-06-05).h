@@ -145,74 +145,23 @@ public:
 
     void listMains(QTableView *table) {
         QSqlQuery queryListMains;
-        QString foodCategory = "Main";
+        QString foodType = "Main";
 
-        queryListMains.prepare("SELECT DISTINCT name FROM items WHERE items.type = :category ");
-        queryListMains.bindValue(":category", foodCategory);
+        queryListMains.prepare("SELECT name, price FROM items WHERE items.type = :type");
+        queryListMains.bindValue(":type", foodType);
         queryListMains.exec();
 
         QSqlQueryModel *tableViewModel = new QSqlQueryModel;
         tableViewModel->setQuery(queryListMains);
 
         tableViewModel->setHeaderData(0, Qt::Horizontal, "Name");
+        tableViewModel->setHeaderData(1, Qt::Horizontal, "Price");
 
         table->setModel(tableViewModel);
         table->resizeColumnsToContents();
         table->setAlternatingRowColors(true);
 
     }
-
-    void listSides(QTableView *table) {
-        QSqlQuery queryListSides;
-        QString foodCategory = "Side";
-
-        queryListSides.prepare("SELECT DISTINCT name FROM items WHERE items.type = :category ");
-        queryListSides.bindValue(":category", foodCategory);
-        queryListSides.exec();
-
-        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
-        tableViewModel->setQuery(queryListSides);
-
-        table->setModel(tableViewModel);
-        table->resizeColumnsToContents();
-        table->setAlternatingRowColors(true);
-
-    }
-
-    void listDrinks(QTableView *table) {
-        QSqlQuery queryListDrinks;
-        QString foodCategory = "Beverage";
-
-        queryListDrinks.prepare("SELECT DISTINCT name FROM items WHERE items.type = :category ");
-        queryListDrinks.bindValue(":category", foodCategory);
-        queryListDrinks.exec();
-
-        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
-        tableViewModel->setQuery(queryListDrinks);
-
-        table->setModel(tableViewModel);
-        table->resizeColumnsToContents();
-        table->setAlternatingRowColors(true);
-
-    }
-
-    void listDesserts(QTableView *table) {
-        QSqlQuery queryListDesserts;
-        QString foodCategory = "Dessert";
-
-        queryListDesserts.prepare("SELECT DISTINCT name FROM items WHERE items.type = :category ");
-        queryListDesserts.bindValue(":category", foodCategory);
-        queryListDesserts.exec();
-
-        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
-        tableViewModel->setQuery(queryListDesserts);
-
-        table->setModel(tableViewModel);
-        table->resizeColumnsToContents();
-        table->setAlternatingRowColors(true);
-
-    }
-
 private:
 
     //create Database
