@@ -18,6 +18,11 @@ MainWindow::MainWindow(QWidget *parent) :
     updateTimeLabel();
 }
 
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
 void MainWindow::updateTimeLabel(){
     QDateTime currentTime;
     currentTime.setTime(currentTime.currentDateTime().time());
@@ -25,21 +30,10 @@ void MainWindow::updateTimeLabel(){
     ui->timeEditSetTime->setTime(currentTime.time());
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
 
 //"global" functions (signals from other buttons call this func)
 void MainWindow::on_buttonLogout_clicked()
 {
-    /*  maybe this is too radical,
-     *  maybe it should return the user only to the login screen
-     *  instead of closing the database connection as well
-     *
-    */
-
-
     //close the connection
     db->closeC();
 
@@ -242,6 +236,7 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
         ui->lineNameLast_2->setEnabled(true);
         ui->lineStreetName_2->setEnabled(true);
         ui->lineStreetNumber_2->setEnabled(true);
+        ui->lineUsername_2->setEnabled(true);
     } else {
         ui->lineCityName_2->setEnabled(false);
         ui->lineCityPLZ_2->setEnabled(false);
@@ -250,6 +245,8 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
         ui->lineNameLast_2->setEnabled(false);
         ui->lineStreetName_2->setEnabled(false);
         ui->lineStreetNumber_2->setEnabled(false);
+        ui->lineUsername_2->setEnabled(false);
+
     }
 }
 
@@ -289,3 +286,57 @@ void MainWindow::on_buttonSubmitNewUser_clicked()
 }
 //----------------------------------------------
 
+
+void MainWindow::on_tableViewAllMains_clicked(const QModelIndex &index)
+{
+
+    int row = index.row();
+    itemRowString = index.sibling(row, 0).data().toString();
+    db->showItemOptions(itemRowString, ui->tableViewItemOptions);
+}
+
+void MainWindow::on_tableViewAllSides_clicked(const QModelIndex &index)
+{
+
+    int row = index.row();
+    itemRowString = index.sibling(row, 0).data().toString();
+    db->showItemOptions(itemRowString, ui->tableViewItemOptions);
+}
+
+void MainWindow::on_tableViewAllDrinks_clicked(const QModelIndex &index)
+{
+
+    int row = index.row();
+    itemRowString = index.sibling(row, 0).data().toString();
+    db->showItemOptions(itemRowString, ui->tableViewItemOptions);
+}
+
+void MainWindow::on_tableViewAllDesserts_clicked(const QModelIndex &index)
+{
+
+    int row = index.row();
+
+    itemRowString = index.sibling(row, 0).data().toString();
+
+    db->showItemOptions(itemRowString, ui->tableViewItemOptions);
+}
+
+void MainWindow::on_tableViewItemOptions_clicked(const QModelIndex &index)
+{
+
+    int row = index.row();
+
+    itemOptionsRowString = index.sibling(row, 0).data().toString();
+
+    ui->buttonAddToCart->setEnabled(true);
+}
+
+void MainWindow::on_buttonAddToCart_clicked()
+{
+    db->fillCart(itemRowString, itemOptionsRowString, ui->tableViewCartUser);
+    ui->buttonAddToCart->setEnabled(false);
+
+    itemRowString.clear();
+    itemOptionsRowString.clear();
+
+}

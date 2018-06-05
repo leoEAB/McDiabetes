@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "database.h"
+
 #include <QMainWindow>
 
 //include for error box at try..catch.. statement
@@ -9,8 +11,10 @@
 //for the current time
 #include <QDateTime>
 
-
-#include "database.h"
+//global variable to store index of item that has been clicked on in tableViewMain/Side/etc..
+static QString itemRowString;
+//global variable to store item options index (for qtableview)
+static QString itemOptionsRowString;
 
 namespace Ui {
 class MainWindow;
@@ -62,6 +66,18 @@ private slots:
     void on_checkBoxEditUserInfo_stateChanged(int arg1);
 
     void on_checkBoxSetTime_stateChanged(int arg1);
+
+    void on_tableViewAllMains_clicked(const QModelIndex &index);
+
+    void on_tableViewAllSides_clicked(const QModelIndex &index);
+
+    void on_tableViewAllDrinks_clicked(const QModelIndex &index);
+
+    void on_tableViewAllDesserts_clicked(const QModelIndex &index);
+
+    void on_tableViewItemOptions_clicked(const QModelIndex &index);
+
+    void on_buttonAddToCart_clicked();
 
 private:
     Ui::MainWindow *ui;

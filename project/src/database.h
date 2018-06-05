@@ -213,6 +213,41 @@ public:
 
     }
 
+    void showItemOptions(QString itemName, QTableView *table) {
+        QSqlQuery queryItemOptions;
+
+        queryItemOptions.prepare("SELECT size, price FROM items WHERE items.name = :itemName");
+        queryItemOptions.bindValue(":itemName", itemName);
+        queryItemOptions.exec();
+
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+        tableViewModel->setQuery(queryItemOptions);
+
+        table->setModel(tableViewModel);
+        table->resizeColumnsToContents();
+        table->setAlternatingRowColors(true);
+    }
+
+    void fillCart(QString itemName, QString itemOption, QTableView *table) {
+        QSqlQuery queryAddItem;
+
+        queryAddItem.prepare("INSERT INTO userCart(type, name, size, price) SELECT '', type, name, size, price FROM items where items.name = :itemName and items.size = :itemSize");
+        queryAddItem.bindValue(":itemName", itemName);
+        queryAddItem.bindValue(":itemSize", itemOption);
+        queryAddItem.exec();
+
+        QSqlQuery listCart;
+        listCart.prepare("SELECT type, name, size, price FROM userCart");
+        listCart.exec();
+
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+        tableViewModel->setQuery(listCart);
+
+        table->setModel(tableViewModel);
+        table->resizeColumnsToContents();
+        table->setAlternatingRowColors(true);
+    }
+
 private:
 
     //create Database
