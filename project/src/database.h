@@ -231,7 +231,7 @@ public:
     void fillCart(QString itemName, QString itemOption, QTableView *table) {
         QSqlQuery queryAddItem;
 
-        queryAddItem.prepare("INSERT INTO userCart(type, name, size, price) SELECT '', type, name, size, price FROM items where items.name = :itemName and items.size = :itemSize");
+        queryAddItem.prepare("INSERT INTO userCart(type, name, size, price) SELECT type, name, size, price FROM items where items.name = :itemName and items.size = :itemSize");
         queryAddItem.bindValue(":itemName", itemName);
         queryAddItem.bindValue(":itemSize", itemOption);
         queryAddItem.exec();
