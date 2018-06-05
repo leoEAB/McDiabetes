@@ -79,6 +79,8 @@ private slots:
 
     void on_buttonAddToCart_clicked();
 
+    void on_pushButtonClearCart_clicked();
+
 private:
     Ui::MainWindow *ui;
 

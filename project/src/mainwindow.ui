@@ -40,7 +40,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="page0">
      <widget class="QWidget" name="formLayoutWidget">
@@ -408,18 +408,87 @@
        </item>
       </layout>
      </widget>
-     <widget class="QTableView" name="tableListAll">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
+     <widget class="QStackedWidget" name="stackedWidgetAdmin">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>80</y>
-        <width>821</width>
-        <height>441</height>
+        <x>19</x>
+        <y>79</y>
+        <width>781</width>
+        <height>491</height>
        </rect>
       </property>
+      <widget class="QWidget" name="pageAllMenuItems">
+       <widget class="QTableView" name="tableListAllMenuItems">
+        <property name="geometry">
+         <rect>
+          <x>25</x>
+          <y>51</y>
+          <width>731</width>
+          <height>421</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget_5">
+        <property name="geometry">
+         <rect>
+          <x>189</x>
+          <y>20</y>
+          <width>411</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QPushButton" name="buttonAddItemAdmin">
+           <property name="text">
+            <string>Add Item</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="buttonDeleteItemAdmin">
+           <property name="text">
+            <string>Delete Selected Item</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="pageAllOrders">
+       <widget class="QTableView" name="tableAllOrdersTimestampAdmin">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>351</width>
+          <height>471</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTableView" name="tableAllOrdersInfoAdmin">
+        <property name="geometry">
+         <rect>
+          <x>420</x>
+          <y>10</y>
+          <width>351</width>
+          <height>471</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="pageAllUsers">
+       <widget class="QTableView" name="tableAllUsersAdmin">
+        <property name="geometry">
+         <rect>
+          <x>15</x>
+          <y>11</y>
+          <width>751</width>
+          <height>461</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="page3_user">
@@ -484,7 +553,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="pageNewOrderUser">
        <widget class="QTabWidget" name="tabWidgetMenuUser">
@@ -657,9 +726,9 @@
         <property name="geometry">
          <rect>
           <x>260</x>
-          <y>101</y>
+          <y>81</y>
           <width>271</width>
-          <height>141</height>
+          <height>131</height>
          </rect>
         </property>
        </widget>
@@ -669,10 +738,10 @@
         </property>
         <property name="geometry">
          <rect>
-          <x>340</x>
-          <y>250</y>
-          <width>111</width>
-          <height>51</height>
+          <x>330</x>
+          <y>220</y>
+          <width>121</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="text">
@@ -685,33 +754,56 @@ V</string>
         <property name="geometry">
          <rect>
           <x>260</x>
-          <y>310</y>
+          <y>270</y>
           <width>511</width>
           <height>181</height>
          </rect>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QWidget" name="horizontalLayoutWidget_4">
         <property name="geometry">
          <rect>
-          <x>560</x>
-          <y>210</y>
-          <width>221</width>
-          <height>23</height>
+          <x>259</x>
+          <y>460</y>
+          <width>511</width>
+          <height>31</height>
          </rect>
         </property>
-        <property name="text">
-         <string>to Checkout</string>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="pushButtonClearCart">
+           <property name="text">
+            <string>Clear Cart</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonToCheckout">
+           <property name="text">
+            <string>Proceed to Checkout -&gt;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="pagePrevOrdersUser">
-       <widget class="QTableView" name="tableView">
+       <widget class="QTableView" name="tableViewPrevOrderInfo">
+        <property name="geometry">
+         <rect>
+          <x>405</x>
+          <y>11</y>
+          <width>361</width>
+          <height>481</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTableView" name="tableViewPrevOrderTimestamps">
         <property name="geometry">
          <rect>
           <x>20</x>
           <y>10</y>
-          <width>741</width>
+          <width>351</width>
           <height>481</height>
          </rect>
         </property>
@@ -943,9 +1035,9 @@ V</string>
       <property name="geometry">
        <rect>
         <x>90</x>
-        <y>130</y>
+        <y>80</y>
         <width>641</width>
-        <height>161</height>
+        <height>211</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridRegistration">

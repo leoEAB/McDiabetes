@@ -174,7 +174,7 @@ void MainWindow::on_buttonListAllMenu_clicked()
 
     ui->stackedWidgetAdmin->setCurrentIndex(0);
 
-    db->listAllItems(ui->tableListAllMenuItems);
+    db->listAllItems(ui->tableListAll);
 }
 
 void MainWindow::on_buttonListOrders_clicked()
@@ -185,20 +185,17 @@ void MainWindow::on_buttonListOrders_clicked()
 
     ui->stackedWidgetAdmin->setCurrentIndex(1);
 
-    db->listAllOrders(ui->tableAllOrdersTimestampAdmin);
+    db->listAllOrders(ui->tableListAll);
 }
 
 void MainWindow::on_buttonListUsers_clicked()
 {
-    if(ui->stackedWidgetAdmin->isHidden()){
-        ui->stackedWidgetAdmin->setHidden(false);
+    if(ui->tableListAll->isHidden()){
+        ui->tableListAll->show();
     }
 
-    ui->stackedWidgetAdmin->setCurrentIndex(2);
-
-    db->listAllUsers(ui->tableAllUsersAdmin);
+    db->listAllUsers(ui->tableListAll);
 }
-
 //-------------------------------------------------
 
 
@@ -243,6 +240,7 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
         ui->lineNameLast_2->setEnabled(true);
         ui->lineStreetName_2->setEnabled(true);
         ui->lineStreetNumber_2->setEnabled(true);
+        ui->lineUsername_2->setEnabled(true);
     } else {
         ui->lineCityName_2->setEnabled(false);
         ui->lineCityPLZ_2->setEnabled(false);
@@ -251,6 +249,7 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
         ui->lineNameLast_2->setEnabled(false);
         ui->lineStreetName_2->setEnabled(false);
         ui->lineStreetNumber_2->setEnabled(false);
+        ui->lineUsername_2->setEnabled(false);
 
     }
 }

@@ -129,17 +129,14 @@ public:
     }
 
     void listAllUsers(QTableView *table) {
+
         QSqlQueryModel *tableViewModel = new QSqlQueryModel;
 
-                                   //ALL USERS
-        tableViewModel->setQuery("SELECT  FROM main WHERE nn !='0' ORDER BY uid");
-
-        tableViewModel->setHeaderData(0, Qt::Horizontal, "Piece Name");
-        tableViewModel->setHeaderData(1, Qt::Horizontal, "NN");
-        tableViewModel->setHeaderData(2, Qt::Horizontal, "Status");
+        tableViewModel->setQuery("select UD.userName, email, firstName, lastName, street, streetNr, city from userInfo as UI RIGHT OUTER JOIN userData as UD ON (UI.userName = UD.userName)");
 
         table->setModel(tableViewModel);
-        table->resizeColumnsToContents();
+        table->resizeColumnToContents(1);
+        table->resizeColumnToContents(5);
         table->setAlternatingRowColors(true);
     }
 
@@ -229,6 +226,10 @@ public:
     }
 
     void fillCart(QString itemName, QString itemOption, QTableView *table) {
+
+        /*delete cart at first*/
+
+
         QSqlQuery queryAddItem;
 
         queryAddItem.prepare("INSERT INTO userCart(type, name, size, price) SELECT type, name, size, price FROM items where items.name = :itemName and items.size = :itemSize");
@@ -247,6 +248,24 @@ public:
         table->resizeColumnsToContents();
         table->setAlternatingRowColors(true);
     }
+
+    void clearCart(QTableView *table) {
+        QSqlQuery setSafeUpdates;
+
+        setSafeUpdates.prepare("SET SQL_SAFE_UPDATES = 0");
+        setSafeUpdates.exec();
+
+        QSqlQuery clearCartQuery;
+        clearCartQuery.prepare("delete from usercart");
+        clearCartQuery.exec();
+
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+        tableViewModel->setQuery(clearCartQuery);
+
+        table->setModel(tableViewModel);
+    }
+
+
 
 private:
 
