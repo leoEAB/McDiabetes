@@ -80,11 +80,12 @@ void MainWindow::on_checkBox_stateChanged(int arg1)
 
 void MainWindow::on_buttonConnectDB_clicked()
 {
-    if(MainWindow::isConnected()){
+    if(isConnected()){
         ui->labelConnectDB->setText("Connection Successful!");
 
         //enables login form on next page
         ui->formFrame_2->setEnabled(true);
+        //enable the two buttons
         ui->buttonNewUser->setEnabled(true);
         ui->buttonLoginStart->setEnabled(true);
 
@@ -93,6 +94,7 @@ void MainWindow::on_buttonConnectDB_clicked()
 
         //disables login form
         ui->formFrame_2->setEnabled(false);
+        //disables the two buttons
         ui->buttonNewUser->setEnabled(false);
         ui->buttonLoginStart->setEnabled(false);
 
@@ -117,10 +119,11 @@ bool MainWindow::isConnected() {
 
     } catch (...) {
 
-        QMessageBox messageBox;
-        messageBox.critical(0,"Error","An error has occured !");
-        messageBox.setFixedSize(500,200);
-
+        QMessageBox::critical(
+          this,
+          tr("McFail"),
+          tr("Connection to DB-Server unsuccessful!")
+        );
         return false;
     }
 }
@@ -150,6 +153,9 @@ void MainWindow::on_buttonLogin_clicked()
         } else {
             ui->stackedWidget->setCurrentIndex(3); //user menu
         }
+
+        //set current user if login is successful
+        currentUser = usernameString;
 
     } else {
         QMessageBox::critical(
@@ -210,11 +216,6 @@ void MainWindow::on_buttonNewOrder_clicked()
     //set the page to the new order page
     ui->stackedWidgetUser->setCurrentIndex(0);
 
-
-    //clear the cart database
-    db->clearCart(ui->tableViewCartUser);
-
-
     db->listMains(ui->tableViewAllMains);
     db->listSides(ui->tableViewAllSides);
     db->listDrinks(ui->tableViewAllDrinks);
@@ -222,26 +223,12 @@ void MainWindow::on_buttonNewOrder_clicked()
 
 }
 
-void MainWindow::on_checkBoxSetTime_stateChanged(int arg1)
-{
-    if(ui->checkBoxEditUserInfo->isChecked() || arg1) {
-        ui->labelSetTime->setEnabled(true);
-        ui->timeEditSetTime->setEnabled(true);
-        ui->pushButtonSetTime->setEnabled(true);
-    } else {
-        updateTimeLabel();
-        ui->labelSetTime->setEnabled(false);
-        ui->timeEditSetTime->setEnabled(false);
-        ui->pushButtonSetTime->setEnabled(false);
-    }
-}
-
 void MainWindow::on_buttonShowPrevOrders_clicked()
 {
     //firstly, show the frame!
     ui->stackedWidgetUser->setHidden(false);
     //set the page to the all previous orders page
-    ui->stackedWidgetUser->setCurrentIndex(1);
+    ui->stackedWidgetUser->setCurrentIndex(2);
 }
 
 void MainWindow::on_buttonUserInfo_clicked()
@@ -249,7 +236,7 @@ void MainWindow::on_buttonUserInfo_clicked()
     //firstly, show the frame!
     ui->stackedWidgetUser->setHidden(false);
     //set the page to the all previous orders page
-    ui->stackedWidgetUser->setCurrentIndex(2);
+    ui->stackedWidgetUser->setCurrentIndex(3);
 }
 
 void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
@@ -274,70 +261,20 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
     }
 }
 
-//-------------------------------------------------
-
-
-//NEW USER SCREEN-------------------------------
-void MainWindow::clearNewUserInput() {
-    ui->lineUsername->clear();
-    ui->linePassword->clear();
-    ui->lineNameFirst->clear();
-    ui->lineNameLast->clear();
-    ui->lineEmail->clear();
-    ui->lineStreetName->clear();
-    ui->lineStreetNumber->clear();
-    ui->lineCityName->clear();
-    ui->lineCityPLZ->clear();
-}
-
-void MainWindow::on_buttonClearUserFields_clicked()
+    //ORDER PAGE
+void MainWindow::on_checkBoxSetTime_stateChanged(int arg1)
 {
-    clearNewUserInput();
-}
-
-void MainWindow::on_buttonSubmitNewUser_clicked()
-{
-    QString username = ui->lineUsername->text();
-    QString password = ui->linePassword->text();
-    QString firstName = ui->lineNameFirst->text();
-    QString lastName = ui->lineNameLast->text();
-    QString email = ui->lineEmail->text();
-    QString street = ui->lineStreetName->text();
-    int streetNumber = ui->lineStreetNumber->text().toInt();
-    QString city = ui->lineCityName->text();
-    QString cityPlz = ui->lineCityPLZ->text();
-
-    if(db->newUser(username, password,
-                firstName, lastName,
-                email,
-                street, streetNumber,
-                   city, cityPlz)) {
-
-
-        clearNewUserInput();
-
-        ui->buttonToLoginNewUserSuccess->setEnabled(true);
-
-        QMessageBox::information(
-          this,
-          tr("McSuccess!"),
-          tr("User created, proceed to login screen!")
-        );
-
+    if(ui->checkBoxEditUserInfo->isChecked() || arg1) {
+        ui->labelSetTime->setEnabled(true);
+        ui->timeEditSetTime->setEnabled(true);
+        ui->pushButtonSetTime->setEnabled(true);
     } else {
-        QMessageBox::critical(
-          this,
-          tr("McFail"),
-          tr("Could not create user at the moment")
-        );
+        updateTimeLabel();
+        ui->labelSetTime->setEnabled(false);
+        ui->timeEditSetTime->setEnabled(false);
+        ui->pushButtonSetTime->setEnabled(false);
     }
-
-
 }
-
-
-//----------------------------------------------
-
 
 void MainWindow::on_tableViewAllMains_clicked(const QModelIndex &index)
 {
@@ -385,18 +322,97 @@ void MainWindow::on_tableViewItemOptions_clicked(const QModelIndex &index)
 
 void MainWindow::on_buttonAddToCart_clicked()
 {
-    db->fillCart(itemRowString, itemOptionsRowString, ui->tableViewCartUser);
-   // ui->buttonAddToCart->setEnabled(false);
-    ui->tableViewCartUser->update();
+    if (db->fillCart(itemRowString, itemOptionsRowString, ui->tableViewCartUser)){
+        ui->tableViewCartUser->update();
+        ui->buttonClearCart->setEnabled(true);
+        ui->buttonToCheckout->setEnabled(true);
+    }
 
 }
 
-void MainWindow::on_pushButtonClearCart_clicked()
+void MainWindow::on_buttonClearCart_clicked()
 {
     db->clearCart(ui->tableViewCartUser);
 }
 
+void MainWindow::on_buttonToCheckout_clicked()
+{
+    db->showFinalOrder(ui->tableViewOrderSummary);
+    ui->stackedWidgetUser->setCurrentIndex(1);
+}
+
+//-------------------------------------------------
+
+
+//NEW USER SCREEN-------------------------------
+void MainWindow::clearNewUserInput() {
+    ui->lineUsername->clear();
+    ui->linePassword->clear();
+    ui->lineNameFirst->clear();
+    ui->lineNameLast->clear();
+    ui->lineEmail->clear();
+    ui->lineStreetName->clear();
+    ui->lineStreetNumber->clear();
+    ui->lineCityName->clear();
+    ui->lineCityPLZ->clear();
+}
+
+void MainWindow::on_buttonClearUserFields_clicked()
+{
+    clearNewUserInput();
+}
+
+void MainWindow::on_buttonSubmitNewUser_clicked()
+{
+    QString username = ui->lineUsername->text();
+    QString password = ui->linePassword->text();
+    QString firstName = ui->lineNameFirst->text();
+    QString lastName = ui->lineNameLast->text();
+    QString email = ui->lineEmail->text();
+    QString street = ui->lineStreetName->text();
+    int streetNumber = ui->lineStreetNumber->text().toInt();
+    QString city = ui->lineCityName->text();
+    QString cityPlz = ui->lineCityPLZ->text();
+
+    if(db->newUser(username, password,
+                firstName, lastName,
+                email,
+                street, streetNumber,
+                   city, cityPlz))
+    {
+        clearNewUserInput();
+
+        ui->buttonToLoginNewUserSuccess->setEnabled(true);
+
+        QMessageBox::information(
+          this,
+          tr("McSuccess!"),
+          tr("User created, proceed to login screen!")
+        );
+
+    } else {
+        QMessageBox::critical(
+          this,
+          tr("McFail"),
+          tr("Could not create user at the moment")
+        );
+    }
+
+
+}
+
+//----------------------------------------------
+
+
+
 void MainWindow::on_buttonToLoginNewUserSuccess_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
+}
+
+
+
+void MainWindow::on_buttonCancelOrder_clicked()
+{
+    ui->stackedWidgetUser->setCurrentIndex(0);
 }

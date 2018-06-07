@@ -16,6 +16,9 @@ static QString itemRowString;
 //global variable to store item options index (for qtableview)
 static QString itemOptionsRowString;
 
+//current logged in user
+static QString currentUser;
+
 namespace Ui {
 class MainWindow;
 }
@@ -80,10 +83,14 @@ private slots:
 
     void on_buttonAddToCart_clicked();
 
-    void on_pushButtonClearCart_clicked();
+    void on_buttonClearCart_clicked();
 
 
     void on_buttonToLoginNewUserSuccess_clicked();
+
+    void on_buttonToCheckout_clicked();
+
+    void on_buttonCancelOrder_clicked();
 
 private:
     Ui::MainWindow *ui;

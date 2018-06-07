@@ -15,12 +15,6 @@
 //throw messageBox if login is unsuccessful
 #include <QMessageBox>
 
-
-//fix this cause it dont work
-const QString userDb = "userData";
-const QString userDbPlus = "userInfo";
-const QString itemsDb = "items";
-
 class Database
 {
 public:
@@ -60,21 +54,20 @@ public:
     }
 
     bool authorizeUser(QString username, QString password) {
+            //by default you are not authorized
+            bool authorized = false;
 
             QSqlQuery queryLogin;
-
-            queryLogin.prepare("SELECT userName, userPassword FROM userData AS u WHERE u.userName = :userName AND u.userPassword = :userPassword");
-            //queryLogin.bindValue(":db", userDb);
-            queryLogin.bindValue(":userName", username);
+            queryLogin.prepare("SELECT authorize(:user, :userPassword)");
+            queryLogin.bindValue(":user", username);
             queryLogin.bindValue(":userPassword", password);
             queryLogin.exec();
 
             while(queryLogin.next()) {
-                if(queryLogin.value(0).toString() == username && queryLogin.value(1).toString() == password){
-                    return true;
-                }
+                authorized = queryLogin.record().value(0).toBool();
             }
-            return false;
+
+            return authorized;
 
     }
 
@@ -83,20 +76,12 @@ public:
 
         QSqlQuery queryAdmin;
 
-        QString userType = "a";
-
-        queryAdmin.prepare("SELECT userName, userType FROM userData AS u WHERE u.userName = :userName and u.userType = :userType ");
-        //queryAdmin.bindValue(":db", userDb);
-        queryAdmin.bindValue(":userName", username);
-        queryAdmin.bindValue(":userType", userType);
+        queryAdmin.prepare("SELECT isAdmin(:username)");
+        queryAdmin.bindValue(":username", username);
         queryAdmin.exec();
 
         while(queryAdmin.next()) {
-            if(queryAdmin.value(0).toString() == username && queryAdmin.value(1).toString() == userType){
-                finalResult = true;
-            } else {
-                finalResult = false;
-            }
+            finalResult = queryAdmin.record().value(0).toBool();
         }
 
         return finalResult;
@@ -140,7 +125,7 @@ public:
 
         QSqlQueryModel *tableViewModel = new QSqlQueryModel;
 
-        tableViewModel->setQuery("select UD.userName, email, firstName, lastName, street, streetNr, plz, city from userInfo as UI RIGHT OUTER JOIN userData as UD ON (UI.userName = UD.userName)");
+        tableViewModel->setQuery("select UD.userName, email, firstName, lastName, street, streetNr, plz, city from user as UI RIGHT OUTER JOIN person as UD ON (UI.userName = UD.userName)");
 
         table->setModel(tableViewModel);
         table->resizeColumnToContents(1);
@@ -233,28 +218,46 @@ public:
         table->setAlternatingRowColors(true);
     }
 
-    void fillCart(QString itemName, QString itemOption, QTableView *table) {
-
-        /*delete cart at first*/
-
+    bool fillCart(QString itemName, QString itemOption, QTableView *table) {
 
         QSqlQuery queryAddItem;
 
-        queryAddItem.prepare("INSERT INTO userCart(type, name, size, price) SELECT type, name, size, price FROM items where items.name = :itemName and items.size = :itemSize");
+        queryAddItem.prepare("INSERT INTO cart(type, name, size, price) SELECT type, name, size, price FROM items where items.name = :itemName and items.size = :itemSize");
         queryAddItem.bindValue(":itemName", itemName);
         queryAddItem.bindValue(":itemSize", itemOption);
-        queryAddItem.exec();
 
         QSqlQuery listCart;
-        listCart.prepare("SELECT type, name, size, price FROM userCart");
-        listCart.exec();
+        listCart.prepare("SELECT type, name, size, price FROM cart");
+
+        if(queryAddItem.exec() && listCart.exec()) {
+            QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+            tableViewModel->setQuery(listCart);
+
+            table->setModel(tableViewModel);
+            table->resizeColumnToContents(1);
+            table->setAlternatingRowColors(true);
+
+            return true;
+
+        } else {
+            return false;
+        }
+
+    }
+
+    void showFinalOrder(QTableView *table) {
+        QSqlQuery showOrder;
+
+        showOrder.prepare("SELECT name, type, size, price FROM userCart");
+        showOrder.exec();
 
         QSqlQueryModel *tableViewModel = new QSqlQueryModel;
-        tableViewModel->setQuery(listCart);
+
+        tableViewModel->setQuery(showOrder);
 
         table->setModel(tableViewModel);
-        table->resizeColumnToContents(1);
-        table->setAlternatingRowColors(true);
+        table->resizeColumnToContents(0);
+        table->setAlternatingRowColors(false);
     }
 
     void clearCart(QTableView *table) {
@@ -279,29 +282,19 @@ public:
                  int streetNumber, QString city,
                  QString cityPlz) {
 
-        //username & password have to be submited fist cause this table is a parent of the next one
-        QSqlQuery submitUserData; //username, password, usertype
+        QSqlQuery newUser;
+        newUser.prepare("CALL addUser(:username, :password, :firstname, :lastname, :email, :street, :streetNr, :plz, :city)");
+        newUser.bindValue(":username", username);
+        newUser.bindValue(":password", password);
+        newUser.bindValue(":firstname", firstName);
+        newUser.bindValue(":lastname", lastName);
+        newUser.bindValue(":email", email);
+        newUser.bindValue(":street", street);
+        newUser.bindValue(":streetNr", streetNumber);
+        newUser.bindValue(":plz", cityPlz);
+        newUser.bindValue(":city", city);
 
-        submitUserData.prepare("INSERT INTO userData(userName, userPassword, userType) "
-                               "VALUES (:username, :password, :userType)");
-        submitUserData.bindValue(":username", username);
-        submitUserData.bindValue(":password", password);
-        submitUserData.bindValue(":userType", "u"); //all admins are already preset
-
-        //child table insertion comes now
-        QSqlQuery submitUserInfo; //full information about user
-        submitUserInfo.prepare("INSERT INTO userInfo(userName, firstName, lastName, email, street, streetNr, plz, city) "
-                               "VALUES (:username, :firstName, :lastName, :email, :street, :streetNumber, :cityPlz, :city)");
-        submitUserInfo.bindValue(":username", username);
-        submitUserInfo.bindValue(":firstName", firstName);
-        submitUserInfo.bindValue(":lastName", lastName);
-        submitUserInfo.bindValue(":email", email);
-        submitUserInfo.bindValue(":street", street);
-        submitUserInfo.bindValue(":streetNumber", streetNumber);
-        submitUserInfo.bindValue(":cityPlz", cityPlz);
-        submitUserInfo.bindValue(":city", city);
-
-        if(submitUserData.exec() && submitUserInfo.exec()) {
+        if(newUser.exec()) {
             return true;
         } else {
             return false;
