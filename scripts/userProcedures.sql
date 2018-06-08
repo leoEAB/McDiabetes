@@ -35,13 +35,16 @@ DELIMITER ;
 
 
 DELIMITER |
-CREATE PROCEDURE addToCart (	IN username VARCHAR(20), 
+CREATE PROCEDURE addToCart (	IN username VARCHAR(20),
 								IN name VARCHAR(20),
                                 IN size VARCHAR(20)
 							)
 	BEGIN
-		INSERT INTO cart(userName) VALUES (username);
-		INSERT INTO cart(type, name, size, price) SELECT (type, name, size, price) FROM items where items.name = name AND items.size = size;
+		INSERT INTO cart (userName, type , name, size, price)
+        SELECT userName, type, name, size, price FROM user AS US, items AS IT WHERE US.userName = username AND IT.name = name AND IT.size = size;
 	END;
 |
 DELIMITER ;
+
+-- tests
+-- CALL addToCart("mihi", "Fries", "small");

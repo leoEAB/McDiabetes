@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+QString MainWindow::itemRowString = "";
+QString MainWindow::itemOptionsRowString = "";
+QString MainWindow::currentUser = "";
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -45,6 +49,7 @@ void MainWindow::on_buttonLogout_clicked()
 
     //return to first page
     ui->stackedWidget->setCurrentIndex(0);
+
 }
 
 void MainWindow::on_buttonPrevious_clicked()
@@ -191,7 +196,7 @@ void MainWindow::on_buttonListOrders_clicked()
 
     ui->stackedWidgetAdmin->setCurrentIndex(1);
 
-    db->listAllOrders(ui->tableAllOrdersTimestampAdmin);
+   // db->listAllOrders(ui->tableAllOrdersTimestampAdmin);
 }
 
 void MainWindow::on_buttonListUsers_clicked()
@@ -215,6 +220,8 @@ void MainWindow::on_buttonNewOrder_clicked()
     ui->stackedWidgetUser->setHidden(false);
     //set the page to the new order page
     ui->stackedWidgetUser->setCurrentIndex(0);
+    //delete previous cart items (cart is only temporary, orderInfo is the orders database)
+    db->clearCart(currentUser, ui->tableViewCartUser);
 
     db->listMains(ui->tableViewAllMains);
     db->listSides(ui->tableViewAllSides);
@@ -237,11 +244,14 @@ void MainWindow::on_buttonUserInfo_clicked()
     ui->stackedWidgetUser->setHidden(false);
     //set the page to the all previous orders page
     ui->stackedWidgetUser->setCurrentIndex(3);
+
 }
 
 void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
 {
     if(ui->checkBoxEditUserInfo->isChecked() || arg1) {
+        ui->buttonCancelInfoChangeUser->setEnabled(true);
+        ui->buttonSubmitInfoChangeUser->setEnabled(true);
         ui->lineCityName_2->setEnabled(true);
         ui->lineCityPLZ_2->setEnabled(true);
         ui->lineEmail_2->setEnabled(true);
@@ -250,6 +260,8 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
         ui->lineStreetName_2->setEnabled(true);
         ui->lineStreetNumber_2->setEnabled(true);
     } else {
+        ui->buttonCancelInfoChangeUser->setEnabled(false);
+        ui->buttonSubmitInfoChangeUser->setEnabled(false);
         ui->lineCityName_2->setEnabled(false);
         ui->lineCityPLZ_2->setEnabled(false);
         ui->lineEmail_2->setEnabled(false);
@@ -261,7 +273,7 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
     }
 }
 
-    //ORDER PAGE
+//ORDER PAGE
 void MainWindow::on_checkBoxSetTime_stateChanged(int arg1)
 {
     if(ui->checkBoxEditUserInfo->isChecked() || arg1) {
@@ -322,22 +334,28 @@ void MainWindow::on_tableViewItemOptions_clicked(const QModelIndex &index)
 
 void MainWindow::on_buttonAddToCart_clicked()
 {
-    if (db->fillCart(itemRowString, itemOptionsRowString, ui->tableViewCartUser)){
+    if (db->fillCart(currentUser, itemRowString, itemOptionsRowString, ui->tableViewCartUser)){
         ui->tableViewCartUser->update();
         ui->buttonClearCart->setEnabled(true);
         ui->buttonToCheckout->setEnabled(true);
+    } else {
+        QMessageBox::critical(
+          this,
+          tr("McFail"),
+          tr("adding failed miserably")
+        );
     }
 
 }
 
 void MainWindow::on_buttonClearCart_clicked()
 {
-    db->clearCart(ui->tableViewCartUser);
+    db->clearCart(currentUser, ui->tableViewCartUser);
 }
 
 void MainWindow::on_buttonToCheckout_clicked()
 {
-    db->showFinalOrder(ui->tableViewOrderSummary);
+    db->showFinalOrder(currentUser, ui->tableViewOrderSummary);
     ui->stackedWidgetUser->setCurrentIndex(1);
 }
 
@@ -415,4 +433,33 @@ void MainWindow::on_buttonToLoginNewUserSuccess_clicked()
 void MainWindow::on_buttonCancelOrder_clicked()
 {
     ui->stackedWidgetUser->setCurrentIndex(0);
+}
+
+void MainWindow::on_buttonConfirmOrder_clicked()
+{
+    /* code to set timestamp
+    QSqlQuery query;
+    query.prepare("INSERT INTO table SET time_field=CURRENT_TIMESTAMP() WHERE id=?");
+    query.addBindValue(5);
+    query.exec();
+    */
+
+    /*
+    if(db->addOrder(currentUser)){
+        QMessageBox::information(
+          this,
+          tr("McSuccess"),
+          tr("Sit back and relax. Your order is on its way!")
+        );
+
+        ui->stackedWidgetUser->setCurrentIndex(2);
+
+    } else {
+        QMessageBox::critical(
+          this,
+          tr("McFail"),
+          tr("Oh nay! Muh carbs!")
+        );
+    }
+    */
 }

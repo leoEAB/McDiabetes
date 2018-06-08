@@ -553,7 +553,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="pageNewOrderUser">
        <widget class="QTabWidget" name="tabWidgetMenuUser">
@@ -823,7 +823,7 @@ V</string>
             </size>
            </property>
            <property name="text">
-            <string>Cancel/Edit Order</string>
+            <string>&lt;- Cancel/Edit Order</string>
            </property>
           </widget>
          </item>
@@ -836,7 +836,7 @@ V</string>
             </size>
            </property>
            <property name="text">
-            <string>Confirm Order</string>
+            <string>Confirm Order -&gt;</string>
            </property>
           </widget>
          </item>
@@ -878,6 +878,9 @@ V</string>
         <layout class="QHBoxLayout" name="horizontalButtonsUserInfo">
          <item>
           <widget class="QPushButton" name="buttonCancelInfoChangeUser">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Cancel Changes</string>
            </property>
@@ -885,6 +888,9 @@ V</string>
          </item>
          <item>
           <widget class="QPushButton" name="buttonSubmitInfoChangeUser">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Submit Changes</string>
            </property>

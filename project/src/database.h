@@ -53,6 +53,7 @@ public:
         db.close();
     }
 
+//LOGIN FUNCTIONS -------------------------------------------------------------------------
     bool authorizeUser(QString username, QString password) {
             //by default you are not authorized
             bool authorized = false;
@@ -72,21 +73,30 @@ public:
     }
 
     bool isAdmin(QString username){
-        bool finalResult = false;
+        //prove me wrong
+        bool isAdmin = false;
 
         QSqlQuery queryAdmin;
 
+        //call function isAdmin
         queryAdmin.prepare("SELECT isAdmin(:username)");
         queryAdmin.bindValue(":username", username);
         queryAdmin.exec();
 
+        //position on 0th row
         while(queryAdmin.next()) {
-            finalResult = queryAdmin.record().value(0).toBool();
+            //the value at column 0, converted to boolean
+            isAdmin = queryAdmin.record().value(0).toBool();
         }
 
-        return finalResult;
+        return isAdmin;
     }
 
+//------------------------------------------------------------------------------------------
+
+
+
+//<NEW ORDER FUNCTIONALITIES> ---------------------------------------------------------------------
     void listAllItems(QTableView *table) {
 
         QSqlQueryModel *tableViewModel = new QSqlQueryModel;
@@ -101,12 +111,12 @@ public:
 
         table->setModel(tableViewModel);
         table->resizeRowsToContents();
-        table->resizeRowsToContents();
         table->resizeColumnToContents(2);
         table->setAlternatingRowColors(true);
     }
 
-    void listAllOrders(QTableView *table) {
+    //TODO
+    void listAllOrdersUser(QTableView *table) {
         QSqlQueryModel *tableViewModel = new QSqlQueryModel;
 
                                    //ALL ORDERS
@@ -121,22 +131,11 @@ public:
         table->setAlternatingRowColors(true);
     }
 
-    void listAllUsers(QTableView *table) {
-
-        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
-
-        tableViewModel->setQuery("select UD.userName, email, firstName, lastName, street, streetNr, plz, city from user as UI RIGHT OUTER JOIN person as UD ON (UI.userName = UD.userName)");
-
-        table->setModel(tableViewModel);
-        table->resizeColumnToContents(1);
-        table->resizeColumnToContents(5);
-        table->setAlternatingRowColors(true);
-    }
-
     void listMains(QTableView *table) {
         QSqlQuery queryListMains;
         QString foodCategory = "Main";
 
+        //size plays no role at the beginning, cause then the user choses the desired size; thus DISTINCT
         queryListMains.prepare("SELECT DISTINCT name FROM items WHERE items.type = :category ");
         queryListMains.bindValue(":category", foodCategory);
         queryListMains.exec();
@@ -218,56 +217,53 @@ public:
         table->setAlternatingRowColors(true);
     }
 
-    bool fillCart(QString itemName, QString itemOption, QTableView *table) {
+    bool fillCart(QString username, QString itemName, QString itemOption, QTableView *table) {
 
+        //create a query that calls a procedure which fills the cart table
         QSqlQuery queryAddItem;
-
-        queryAddItem.prepare("INSERT INTO cart(type, name, size, price) SELECT type, name, size, price FROM items where items.name = :itemName and items.size = :itemSize");
+        queryAddItem.prepare("CALL addToCart(:username, :itemName, :itemSize)");
+        queryAddItem.bindValue(":username", username);
         queryAddItem.bindValue(":itemName", itemName);
         queryAddItem.bindValue(":itemSize", itemOption);
 
+        //this query is only to list the cart items ONLY for the current user
         QSqlQuery listCart;
-        listCart.prepare("SELECT type, name, size, price FROM cart");
+        listCart.prepare("SELECT type, name, size, price FROM cart WHERE cart.userName = :username");
+        listCart.bindValue(":username", username);
 
+        //define a table view model which fills up the QTableView
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+
+        table->setModel(tableViewModel);
+        table->resizeColumnToContents(1);
+        table->setAlternatingRowColors(true);
+
+        //.exec() functions return true if query is successful
         if(queryAddItem.exec() && listCart.exec()) {
-            QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+
+            //SetQuery resets the model and updates the data
             tableViewModel->setQuery(listCart);
 
-            table->setModel(tableViewModel);
-            table->resizeColumnToContents(1);
-            table->setAlternatingRowColors(true);
+            //scroll to bottom, obviously
+            table->scrollToBottom();
 
             return true;
-
         } else {
             return false;
         }
 
     }
 
-    void showFinalOrder(QTableView *table) {
-        QSqlQuery showOrder;
-
-        showOrder.prepare("SELECT name, type, size, price FROM userCart");
-        showOrder.exec();
-
-        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
-
-        tableViewModel->setQuery(showOrder);
-
-        table->setModel(tableViewModel);
-        table->resizeColumnToContents(0);
-        table->setAlternatingRowColors(false);
-    }
-
-    void clearCart(QTableView *table) {
+    void clearCart(QString username, QTableView *table) {
         QSqlQuery setSafeUpdates;
 
+        //
         setSafeUpdates.prepare("SET SQL_SAFE_UPDATES = 0");
         setSafeUpdates.exec();
 
         QSqlQuery clearCartQuery;
-        clearCartQuery.prepare("delete from usercart");
+        clearCartQuery.prepare("DELETE FROM cart WHERE cart.userName = :username");
+        clearCartQuery.bindValue(":username", username);
         clearCartQuery.exec();
 
         QSqlQueryModel *tableViewModel = new QSqlQueryModel;
@@ -276,6 +272,43 @@ public:
         table->setModel(tableViewModel);
     }
 
+    void showFinalOrder(QString username, QTableView *table) {
+        QSqlQuery showOrder;
+
+        showOrder.prepare("SELECT type, name, size, price FROM cart WHERE cart.userName = :username");
+        showOrder.bindValue(":username", username);
+        showOrder.exec();
+
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+
+        tableViewModel->setQuery(showOrder);
+
+        table->setModel(tableViewModel);
+        table->resizeColumnsToContents();
+        table->resizeColumnToContents(1);
+        table->setAlternatingRowColors(false);
+    }
+
+//---------------------------------------------------------------------------------------------
+
+//ADMIN FUNCTIONALITIES -----------------------------------------------------------------------
+    void listAllUsers(QTableView *table) {
+
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+
+        //there are users with empty fields!! (admins, test users)
+        tableViewModel->setQuery("select UD.userName, email, firstName, lastName, street, streetNr, plz, city from user as UI RIGHT OUTER JOIN person as UD ON (UI.userName = UD.userName)");
+
+        table->setModel(tableViewModel);
+        table->resizeColumnToContents(1);
+        table->resizeColumnToContents(5);
+        table->setAlternatingRowColors(true);
+    }
+
+
+//---------------------------------------------------------------------------------------------
+
+//NEW USER PAGE -------------------------------------------------------------------------
     bool newUser(QString username, QString password,
                  QString firstName, QString lastName,
                  QString email, QString street,

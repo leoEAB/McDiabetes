@@ -35,7 +35,34 @@ create table cart (
 
 );
 
+create table orderInfo (
+	userName varchar(20),
+    orderDate datetime,
+    firstName varchar(20),
+    lastName varchar(20),
+    email varchar(30),
+    street varchar(20),
+    streetNr int,
+	plz varchar(6),
+    city varchar(20),
+    type varchar(20),
+    name varchar(50),
+    size varchar(20),
+	price dec(5,2),
+    
+	FOREIGN KEY (userName) REFERENCES user(userName) ON UPDATE CASCADE ON DELETE CASCADE
 
+);
+
+
+insert into user values ("mihi", "mihi", "a");
 insert into user values ("user", "user", "u");
+insert into user values ("user1", "user1", "u");
+
 
 select * from user;
+
+select * from cart;
+
+
+delete from cart where c.userName = "user";

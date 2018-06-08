@@ -11,13 +11,7 @@
 //for the current time
 #include <QDateTime>
 
-//global variable to store index of item that has been clicked on in tableViewMain/Side/etc..
-static QString itemRowString;
-//global variable to store item options index (for qtableview)
-static QString itemOptionsRowString;
 
-//current logged in user
-static QString currentUser;
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +20,13 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+    //variable to store index of item that has been clicked on in tableViewMain/Side/etc..
+    static QString itemRowString;
+    //variable to store item options index (for qtableview)
+    static QString itemOptionsRowString;
+    //current logged in user
+    static QString currentUser;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -91,6 +92,8 @@ private slots:
     void on_buttonToCheckout_clicked();
 
     void on_buttonCancelOrder_clicked();
+
+    void on_buttonConfirmOrder_clicked();
 
 private:
     Ui::MainWindow *ui;
