@@ -40,7 +40,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="page0">
      <widget class="QWidget" name="formLayoutWidget">
@@ -417,6 +417,9 @@
         <height>491</height>
        </rect>
       </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
       <widget class="QWidget" name="pageAllMenuItems">
        <widget class="QTableView" name="tableListAllMenuItems">
         <property name="geometry">
@@ -461,18 +464,18 @@
          <rect>
           <x>10</x>
           <y>10</y>
-          <width>351</width>
-          <height>471</height>
+          <width>761</width>
+          <height>261</height>
          </rect>
         </property>
        </widget>
        <widget class="QTableView" name="tableAllOrdersInfoAdmin">
         <property name="geometry">
          <rect>
-          <x>420</x>
-          <y>10</y>
-          <width>351</width>
-          <height>471</height>
+          <x>10</x>
+          <y>300</y>
+          <width>761</width>
+          <height>181</height>
          </rect>
         </property>
        </widget>

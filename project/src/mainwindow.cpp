@@ -197,7 +197,7 @@ void MainWindow::on_buttonListOrders_clicked()
 
     ui->stackedWidgetAdmin->setCurrentIndex(1);
 
-   // db->listAllOrders(ui->tableAllOrdersTimestampAdmin);
+   db->listAllOrders(ui->tableAllOrdersTimestampAdmin);
 }
 
 void MainWindow::on_buttonListUsers_clicked()
@@ -276,6 +276,14 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
 
     }
 }
+
+void MainWindow::on_tableViewPrevOrderTimestamps_clicked(const QModelIndex &index)
+{
+    int row = index.row();
+    QDateTime dateTime = index.sibling(row, 0).data().toDateTime();
+    db->showOrderContents(dateTime, ui->tableViewPrevOrderInfo);
+}
+
 
 //ORDER PAGE
 void MainWindow::on_checkBoxSetTime_stateChanged(int arg1)
@@ -363,6 +371,34 @@ void MainWindow::on_buttonToCheckout_clicked()
     ui->stackedWidgetUser->setCurrentIndex(1);
 }
 
+void MainWindow::on_buttonCancelOrder_clicked()
+{
+    ui->stackedWidgetUser->setCurrentIndex(0);
+}
+
+void MainWindow::on_buttonConfirmOrder_clicked()
+{
+
+    if(db->completeOrder(currentUser)){
+        QMessageBox::information(
+          this,
+          tr("McSuccess"),
+          tr("Sit back and relax. Your order is on its way!")
+        );
+
+        db->listAllOrdersUser(currentUser, ui->tableViewPrevOrderTimestamps);
+        ui->stackedWidgetUser->setCurrentIndex(2);
+
+    } else {
+        QMessageBox::critical(
+          this,
+          tr("McFail"),
+          tr("Oh nay! Muh carbs!")
+        );
+    }
+
+}
+
 //-------------------------------------------------
 
 
@@ -423,48 +459,16 @@ void MainWindow::on_buttonSubmitNewUser_clicked()
 
 }
 
-//----------------------------------------------
-
-
-
 void MainWindow::on_buttonToLoginNewUserSuccess_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
 }
 
+//----------------------------------------------
 
-
-void MainWindow::on_buttonCancelOrder_clicked()
-{
-    ui->stackedWidgetUser->setCurrentIndex(0);
-}
-
-void MainWindow::on_buttonConfirmOrder_clicked()
-{
-
-    if(db->completeOrder(currentUser)){
-        QMessageBox::information(
-          this,
-          tr("McSuccess"),
-          tr("Sit back and relax. Your order is on its way!")
-        );
-
-        db->listAllOrdersUser(currentUser, ui->tableViewPrevOrderTimestamps);
-        ui->stackedWidgetUser->setCurrentIndex(2);
-
-    } else {
-        QMessageBox::critical(
-          this,
-          tr("McFail"),
-          tr("Oh nay! Muh carbs!")
-        );
-    }
-
-}
-
-void MainWindow::on_tableViewPrevOrderTimestamps_clicked(const QModelIndex &index)
+void MainWindow::on_tableAllOrdersTimestampAdmin_clicked(const QModelIndex &index)
 {
     int row = index.row();
-    QDateTime dateTime = index.sibling(row, 0).data().toDateTime();
-    db->showOrderContents(dateTime, ui->tableViewPrevOrderInfo);
+    QDateTime dateTime = index.sibling(row, 1).data().toDateTime();
+    db->showOrderContents(dateTime, ui->tableAllOrdersInfoAdmin);
 }

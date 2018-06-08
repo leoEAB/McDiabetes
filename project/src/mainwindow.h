@@ -102,6 +102,8 @@ private slots:
 
     void on_tableViewPrevOrderTimestamps_clicked(const QModelIndex &index);
 
+    void on_tableAllOrdersTimestampAdmin_clicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
 

@@ -97,25 +97,6 @@ public:
 
 
 //<NEW ORDER FUNCTIONALITIES> ---------------------------------------------------------------------
-    void listAllItems(QTableView *table) {
-
-        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
-                                   //ALL MENU ITEMS
-        tableViewModel->setQuery("SELECT category, type, name, size, price FROM items ORDER BY name");
-
-        tableViewModel->setHeaderData(0, Qt::Horizontal, "Category");
-        tableViewModel->setHeaderData(1, Qt::Horizontal, "Type");
-        tableViewModel->setHeaderData(2, Qt::Horizontal, "Name");
-        tableViewModel->setHeaderData(3, Qt::Horizontal, "Size");
-        tableViewModel->setHeaderData(4, Qt::Horizontal, "price");
-
-        table->setModel(tableViewModel);
-        table->resizeRowsToContents();
-        table->resizeColumnToContents(2);
-        table->setAlternatingRowColors(true);
-    }
-
-    //TODO
     void listAllOrdersUser(QString username, QTableView *table) {
         QSqlQuery queryOrderInfo;
 
@@ -241,7 +222,6 @@ public:
         table->setAlternatingRowColors(true);
     }
 
-
     bool fillCart(QString username, QString itemName, QString itemOption, QTableView *table) {
 
         //create a query that calls a procedure which fills the cart table
@@ -344,6 +324,46 @@ public:
         table->setAlternatingRowColors(true);
     }
 
+    void listAllItems(QTableView *table) {
+
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+                                   //ALL MENU ITEMS
+        tableViewModel->setQuery("SELECT category, type, name, size, price FROM items ORDER BY name");
+
+        tableViewModel->setHeaderData(0, Qt::Horizontal, "Category");
+        tableViewModel->setHeaderData(1, Qt::Horizontal, "Type");
+        tableViewModel->setHeaderData(2, Qt::Horizontal, "Name");
+        tableViewModel->setHeaderData(3, Qt::Horizontal, "Size");
+        tableViewModel->setHeaderData(4, Qt::Horizontal, "price");
+
+        table->setModel(tableViewModel);
+        table->resizeRowsToContents();
+        table->resizeColumnToContents(2);
+        table->setAlternatingRowColors(true);
+    }
+
+    void listAllOrders(QTableView *table) {
+        QSqlQuery queryOrders;
+
+        queryOrders.prepare("SELECT  userName AS Username,"
+                               "        orderDate AS Date, "
+                               "        total AS Total,"
+                               "        firstName AS `Ordered by`,"
+                               "        lastName AS `Family Name`,"
+                               "        email AS Email,"
+                               "        street AS Street,"
+                               "        streetNr AS `No.`,"
+                               "        plz AS PLZ,"
+                               "        city AS City FROM orderInfo AS O");
+        queryOrders.exec();
+
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+        tableViewModel->setQuery(queryOrders);
+
+        table->setModel(tableViewModel);
+        table->resizeColumnsToContents();
+        table->setAlternatingRowColors(true);
+    }
 
 //---------------------------------------------------------------------------------------------
 
