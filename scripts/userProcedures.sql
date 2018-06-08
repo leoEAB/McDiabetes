@@ -1,6 +1,7 @@
 drop procedure if exists addUser;
 drop procedure if exists deleteUser;
 drop procedure if exists addToCart;
+drop procedure if exists completeOrder;
 
 
 DELIMITER |
@@ -46,5 +47,49 @@ CREATE PROCEDURE addToCart (	IN username VARCHAR(20),
 |
 DELIMITER ;
 
+DELIMITER |
+CREATE PROCEDURE completeOrder( IN username VARCHAR(20))
+	BEGIN
+		-- trigger will add date and time before every insert, for both tables
+        
+		INSERT INTO orderInfo (	userName,
+								total,
+								firstName,
+								lastName,
+								email,
+								street,
+								streetNr,
+								plz,
+								city
+								)
+		SELECT 	U.userName,
+				SUM(C.price),
+				P.firstName,
+				P.lastName,
+				P.email,
+				P.street,
+				P.streetNr,
+				P.plz,
+				P.city
+		FROM user AS U, person AS P, cart AS C
+        WHERE U.userName = username AND P.userName = username AND C.userName = username;
+
+		INSERT INTO orderContents (	userName,
+									type,
+									name,
+									size,
+									price
+								)
+		SELECT userName, type, name, size, price FROM user AS U, cart AS C WHERE U.userName = username AND C.userName = username;
+        
+        
+
+        
+	END;
+|
+DELIMITER ;
 -- tests
 -- CALL addToCart("mihi", "Fries", "small");
+
+CALL completeOrder("mihi94");
+-- CALL completeOrder("user");

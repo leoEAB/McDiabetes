@@ -553,7 +553,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="pageNewOrderUser">
        <widget class="QTabWidget" name="tabWidgetMenuUser">
@@ -847,20 +847,20 @@ V</string>
        <widget class="QTableView" name="tableViewPrevOrderInfo">
         <property name="geometry">
          <rect>
-          <x>405</x>
-          <y>11</y>
-          <width>361</width>
-          <height>481</height>
+          <x>10</x>
+          <y>330</y>
+          <width>751</width>
+          <height>161</height>
          </rect>
         </property>
        </widget>
        <widget class="QTableView" name="tableViewPrevOrderTimestamps">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>10</y>
-          <width>351</width>
-          <height>481</height>
+          <x>10</x>
+          <y>40</y>
+          <width>751</width>
+          <height>231</height>
          </rect>
         </property>
        </widget>
@@ -1363,6 +1363,79 @@ V</string>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>lineNameFirst</tabstop>
+  <tabstop>lineNameLast</tabstop>
+  <tabstop>lineEmail</tabstop>
+  <tabstop>lineUsername</tabstop>
+  <tabstop>linePassword</tabstop>
+  <tabstop>lineStreetName</tabstop>
+  <tabstop>lineStreetNumber</tabstop>
+  <tabstop>lineCityName</tabstop>
+  <tabstop>lineCityPLZ</tabstop>
+  <tabstop>buttonConnectDB</tabstop>
+  <tabstop>lineUser</tabstop>
+  <tabstop>linePass</tabstop>
+  <tabstop>buttonLogin</tabstop>
+  <tabstop>buttonQuit_3</tabstop>
+  <tabstop>buttonListAllMenu</tabstop>
+  <tabstop>buttonListOrders</tabstop>
+  <tabstop>buttonListUsers</tabstop>
+  <tabstop>tableListAllMenuItems</tabstop>
+  <tabstop>buttonAddItemAdmin</tabstop>
+  <tabstop>buttonDeleteItemAdmin</tabstop>
+  <tabstop>tableAllOrdersTimestampAdmin</tabstop>
+  <tabstop>tableAllOrdersInfoAdmin</tabstop>
+  <tabstop>tableAllUsersAdmin</tabstop>
+  <tabstop>buttonNewOrder</tabstop>
+  <tabstop>buttonShowPrevOrders</tabstop>
+  <tabstop>buttonUserInfo</tabstop>
+  <tabstop>tabWidgetMenuUser</tabstop>
+  <tabstop>tableViewAllMains</tabstop>
+  <tabstop>tableViewAllSides</tabstop>
+  <tabstop>tableViewAllDrinks</tabstop>
+  <tabstop>tableViewAllDesserts</tabstop>
+  <tabstop>timeEditSetTime</tabstop>
+  <tabstop>checkBoxSetTime</tabstop>
+  <tabstop>pushButtonSetTime</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>tableViewItemOptions</tabstop>
+  <tabstop>buttonAddToCart</tabstop>
+  <tabstop>tableViewCartUser</tabstop>
+  <tabstop>buttonClearCart</tabstop>
+  <tabstop>buttonToCheckout</tabstop>
+  <tabstop>tableViewPrevOrderInfo</tabstop>
+  <tabstop>tableViewPrevOrderTimestamps</tabstop>
+  <tabstop>buttonCancelInfoChangeUser</tabstop>
+  <tabstop>buttonSubmitInfoChangeUser</tabstop>
+  <tabstop>lineCityName_2</tabstop>
+  <tabstop>lineNameLast_2</tabstop>
+  <tabstop>lineNameFirst_2</tabstop>
+  <tabstop>lineUsername_2</tabstop>
+  <tabstop>lineStreetNumber_2</tabstop>
+  <tabstop>lineCityPLZ_2</tabstop>
+  <tabstop>lineEmail_2</tabstop>
+  <tabstop>lineStreetName_2</tabstop>
+  <tabstop>checkBoxEditUserInfo</tabstop>
+  <tabstop>buttonQuit_4</tabstop>
+  <tabstop>lineDatenbankName</tabstop>
+  <tabstop>linePassDB</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>lineUserDB</tabstop>
+  <tabstop>linePortDB</tabstop>
+  <tabstop>buttonNewUser</tabstop>
+  <tabstop>buttonLoginStart</tabstop>
+  <tabstop>lineServerDB</tabstop>
+  <tabstop>buttonClearUserFields</tabstop>
+  <tabstop>buttonSubmitNewUser</tabstop>
+  <tabstop>buttonToLoginNewUserSuccess</tabstop>
+  <tabstop>buttonPrevious</tabstop>
+  <tabstop>buttonLogout</tabstop>
+  <tabstop>buttonQuit</tabstop>
+  <tabstop>tableViewOrderSummary</tabstop>
+  <tabstop>buttonConfirmOrder</tabstop>
+  <tabstop>buttonCancelOrder</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

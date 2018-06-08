@@ -4,6 +4,7 @@
 QString MainWindow::itemRowString = "";
 QString MainWindow::itemOptionsRowString = "";
 QString MainWindow::currentUser = "";
+QString MainWindow::orderInfoString = "";
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -236,6 +237,9 @@ void MainWindow::on_buttonShowPrevOrders_clicked()
     ui->stackedWidgetUser->setHidden(false);
     //set the page to the all previous orders page
     ui->stackedWidgetUser->setCurrentIndex(2);
+
+    db->listAllOrdersUser(currentUser, ui->tableViewPrevOrderTimestamps);
+
 }
 
 void MainWindow::on_buttonUserInfo_clicked()
@@ -437,21 +441,15 @@ void MainWindow::on_buttonCancelOrder_clicked()
 
 void MainWindow::on_buttonConfirmOrder_clicked()
 {
-    /* code to set timestamp
-    QSqlQuery query;
-    query.prepare("INSERT INTO table SET time_field=CURRENT_TIMESTAMP() WHERE id=?");
-    query.addBindValue(5);
-    query.exec();
-    */
 
-    /*
-    if(db->addOrder(currentUser)){
+    if(db->completeOrder(currentUser)){
         QMessageBox::information(
           this,
           tr("McSuccess"),
           tr("Sit back and relax. Your order is on its way!")
         );
 
+        db->listAllOrdersUser(currentUser, ui->tableViewPrevOrderTimestamps);
         ui->stackedWidgetUser->setCurrentIndex(2);
 
     } else {
@@ -461,5 +459,12 @@ void MainWindow::on_buttonConfirmOrder_clicked()
           tr("Oh nay! Muh carbs!")
         );
     }
-    */
+
+}
+
+void MainWindow::on_tableViewPrevOrderTimestamps_clicked(const QModelIndex &index)
+{
+    int row = index.row();
+    QDateTime dateTime = index.sibling(row, 0).data().toDateTime();
+    db->showOrderContents(dateTime, ui->tableViewPrevOrderInfo);
 }

@@ -116,20 +116,44 @@ public:
     }
 
     //TODO
-    void listAllOrdersUser(QTableView *table) {
+    void listAllOrdersUser(QString username, QTableView *table) {
+        QSqlQuery queryOrderInfo;
+
+        queryOrderInfo.prepare("SELECT orderDate AS Date, total AS Total,"
+                               "        firstName AS `Ordered by`,"
+                               "        lastName AS `Family Name`,"
+                               "        email AS Email,"
+                               "        street AS Street,"
+                               "        streetNr AS `No.`,"
+                               "        plz AS PLZ,"
+                               "        city AS City FROM orderInfo AS O WHERE O.userName = :username");
+        queryOrderInfo.bindValue(":username", username);
+        queryOrderInfo.exec();
+
         QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+        tableViewModel->setQuery(queryOrderInfo);
 
-                                   //ALL ORDERS
-        tableViewModel->setQuery("SELECT piece_name, nn, status FROM main WHERE nn !='0' ORDER BY uid");
+        table->setModel(tableViewModel);
+        table->resizeColumnsToContents();
+        table->setAlternatingRowColors(true);
 
-        tableViewModel->setHeaderData(0, Qt::Horizontal, "Piece Name");
-        tableViewModel->setHeaderData(1, Qt::Horizontal, "NN");
-        tableViewModel->setHeaderData(2, Qt::Horizontal, "Status");
+    }
+
+    void showOrderContents(QDateTime orderDate, QTableView *table){
+        QSqlQuery queryOrderContents;
+
+        queryOrderContents.prepare("SELECT type AS Type, name AS Name, size AS Size, price AS Price FROM orderContents WHERE orderContents.orderDate = :date");
+        queryOrderContents.bindValue(":date", orderDate);
+        queryOrderContents.exec();
+
+        QSqlQueryModel *tableViewModel = new QSqlQueryModel;
+        tableViewModel->setQuery(queryOrderContents);
 
         table->setModel(tableViewModel);
         table->resizeColumnsToContents();
         table->setAlternatingRowColors(true);
     }
+
 
     void listMains(QTableView *table) {
         QSqlQuery queryListMains;
@@ -217,6 +241,7 @@ public:
         table->setAlternatingRowColors(true);
     }
 
+
     bool fillCart(QString username, QString itemName, QString itemOption, QTableView *table) {
 
         //create a query that calls a procedure which fills the cart table
@@ -287,6 +312,20 @@ public:
         table->resizeColumnsToContents();
         table->resizeColumnToContents(1);
         table->setAlternatingRowColors(false);
+    }
+
+    bool completeOrder(QString username) {
+        QSqlQuery order;
+
+        order.prepare("CALL completeOrder(:username)");
+        order.bindValue(":username", username);
+
+        if(order.exec()){
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 //---------------------------------------------------------------------------------------------
