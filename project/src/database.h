@@ -96,7 +96,7 @@ public:
 
 
 
-//<NEW ORDER FUNCTIONALITIES> ---------------------------------------------------------------------
+//USER FUNCTIONS ---------------------------------------------------------------------
     void listAllOrdersUser(QString username, QTableView *table) {
         QSqlQuery queryOrderInfo;
 
@@ -134,7 +134,6 @@ public:
         table->resizeColumnsToContents();
         table->setAlternatingRowColors(true);
     }
-
 
     void listMains(QTableView *table) {
         QSqlQuery queryListMains;
@@ -308,6 +307,24 @@ public:
 
     }
 
+    QString getStringFromQuery(QString username, QString what) {
+        QString result;
+
+        QSqlQuery query;
+
+        query.prepare("SELECT getUserData(:username, :what)");
+        query.bindValue(":username", username);
+        query.bindValue(":what", what);
+        query.exec();
+
+        while(query.next()) {
+            result = query.record().value(0).toString();
+        }
+
+        return result;
+
+
+    }
 //---------------------------------------------------------------------------------------------
 
 //ADMIN FUNCTIONALITIES -----------------------------------------------------------------------

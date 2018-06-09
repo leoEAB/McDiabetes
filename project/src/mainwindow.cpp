@@ -28,6 +28,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//TBC!!!
 void MainWindow::updateTimeLabel(){
     QDateTime currentTime;
     currentTime.setTime(currentTime.currentDateTime().time());
@@ -246,6 +247,21 @@ void MainWindow::on_buttonUserInfo_clicked()
 {
     //firstly, show the frame!
     ui->stackedWidgetUser->setHidden(false);
+    QString firstName = "firstName";
+
+    QString name = db->getStringFromQuery(currentUser, firstName);
+
+
+    ui->lineNameFirst_2->setText(name);
+    /*
+    ui->lineNameLast_2->setText();
+    ui->lineStreetName_2->setText();
+    ui->lineStreetNumber_2->setText();
+    ui->lineCityName_2->setText();
+    ui->lineCityPLZ_2->setText();
+    ui->lineEmail_2->setText();
+*/
+
     //set the page to the all previous orders page
     ui->stackedWidgetUser->setCurrentIndex(3);
 

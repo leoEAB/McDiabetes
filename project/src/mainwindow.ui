@@ -40,7 +40,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="page0">
      <widget class="QWidget" name="formLayoutWidget">
@@ -418,7 +418,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="pageAllMenuItems">
        <widget class="QTableView" name="tableListAllMenuItems">
@@ -434,9 +434,9 @@
        <widget class="QWidget" name="horizontalLayoutWidget_5">
         <property name="geometry">
          <rect>
-          <x>189</x>
+          <x>179</x>
           <y>20</y>
-          <width>411</width>
+          <width>421</width>
           <height>31</height>
          </rect>
         </property>
@@ -485,11 +485,37 @@
         <property name="geometry">
          <rect>
           <x>15</x>
-          <y>11</y>
+          <y>41</y>
           <width>751</width>
-          <height>461</height>
+          <height>431</height>
          </rect>
         </property>
+       </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget_7">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>10</y>
+          <width>381</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QPushButton" name="buttonEditSelectedUser">
+           <property name="text">
+            <string>Edit Selected User</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="buttonDeleteSelectedUser">
+           <property name="text">
+            <string>Delete Selected User</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
      </widget>
@@ -556,7 +582,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="pageNewOrderUser">
        <widget class="QTabWidget" name="tabWidgetMenuUser">

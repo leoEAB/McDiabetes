@@ -1,5 +1,6 @@
 drop function if exists	authorize;
 drop function if exists isAdmin;
+drop function if exists getUserData;
 
 DELIMITER |
 CREATE FUNCTION authorize(username VARCHAR(20), userpassword VARCHAR(30)) RETURNS BOOL
@@ -21,6 +22,26 @@ END;
 |
 DELIMITER ;
 
+DELIMITER |
+CREATE FUNCTION getUserData(username VARCHAR(20), what VARCHAR(20)) RETURNS VARCHAR(50)
+BEGIN
+	DECLARE result VARCHAR(50);
+    DECLARE strippedWhat VARCHAR(20);
+    
+    -- SET strippedWhat = (SELECT CONCAT());
+    
+
+    SET result = (SELECT strippedWhat FROM person WHERE person.userName = username);
+    
+    RETURN result;
+END;
+|
+DELIMITER ;
+
 -- test:
 -- select isAdmin("mihi");
 -- select isAdmin("user");
+select getUserData("mihi94", "firstName");
+
+
+

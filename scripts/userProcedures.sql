@@ -80,6 +80,7 @@ CREATE PROCEDURE completeOrder( IN username VARCHAR(20))
 									size,
 									price
 								)
+                                
 		SELECT userName, type, name, size, price FROM user AS U, cart AS C WHERE U.userName = username AND C.userName = username;
         
         
@@ -91,5 +92,5 @@ DELIMITER ;
 -- tests
 -- CALL addToCart("mihi", "Fries", "small");
 
-CALL completeOrder("mihi94");
+-- CALL completeOrder("mihi94");
 -- CALL completeOrder("user");

@@ -69,6 +69,9 @@ create table orderContents(
 );
 
 
+
+-- tests
+
 insert into user values ("mihi", "mihi", "a");
 insert into user values ("user", "user", "u");
 insert into user values ("user1", "user1", "u");
@@ -87,6 +90,7 @@ SET SQL_SAFE_UPDATES = 0;
 
 delete from orderInfo;
 
+select firstName from person where person.userName = "mihi94"; 
 
 
 
