@@ -89,6 +89,8 @@ CREATE PROCEDURE completeOrder( IN username VARCHAR(20))
 	END;
 |
 DELIMITER ;
+
+
 -- tests
 -- CALL addToCart("mihi", "Fries", "small");
 

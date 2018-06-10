@@ -1,0 +1,4 @@
+- Street number soll lieber als VARCHAR() gespeichert werden, da die suchanfragen generalisiert werden können
+(z.B wir brauchen jetzt eine extra Funktion um die stretNr zu bekommen!!!)
+
+- 

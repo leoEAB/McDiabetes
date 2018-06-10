@@ -25,15 +25,18 @@ DELIMITER ;
 DELIMITER |
 CREATE FUNCTION getUserData(username VARCHAR(20), what VARCHAR(20)) RETURNS VARCHAR(50)
 BEGIN
-	DECLARE result VARCHAR(50);
-    DECLARE strippedWhat VARCHAR(20);
-    
-    -- SET strippedWhat = (SELECT CONCAT());
-    
-
-    SET result = (SELECT strippedWhat FROM person WHERE person.userName = username);
-    
-    RETURN result;
+	RETURN (SELECT 
+				CASE what
+					WHEN "userName" THEN userName
+					WHEN "firstName" THEN firstName
+					WHEN "lastName" THEN lastName
+					WHEN "email" THEN email
+					WHEN "street" THEN street
+                    WHEN "streetNr" THEN streetNr
+					WHEN "plz" THEN plz
+					WHEN "city" THEN city
+				END
+			FROM person WHERE person.userName = username);
 END;
 |
 DELIMITER ;
@@ -41,7 +44,5 @@ DELIMITER ;
 -- test:
 -- select isAdmin("mihi");
 -- select isAdmin("user");
-select getUserData("mihi94", "firstName");
-
-
+select getUserData("mihi94", "streetNr");
 

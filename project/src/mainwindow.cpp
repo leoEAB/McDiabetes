@@ -12,9 +12,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //set newOrderFrame to invisible at first
+    //set stacked widgets to invisible at first
     ui->stackedWidgetUser->setHidden(true);
     ui->stackedWidgetAdmin->setHidden(true);
+
     //initialize database first before calling methods!!!!!!!!!!!!!
     db = new Database();
 
@@ -51,6 +52,13 @@ void MainWindow::on_buttonLogout_clicked()
 
     //return to first page
     ui->stackedWidget->setCurrentIndex(0);
+
+    //hide the widgets & set their indexes to 0
+    ui->stackedWidgetUser->setHidden(true);
+    ui->stackedWidgetUser->setCurrentIndex(0);
+
+    ui->stackedWidgetAdmin->setHidden(true);
+    ui->stackedWidgetAdmin->setCurrentIndex(0);
 
 }
 
@@ -245,24 +253,19 @@ void MainWindow::on_buttonShowPrevOrders_clicked()
 
 void MainWindow::on_buttonUserInfo_clicked()
 {
-    //firstly, show the frame!
+    ui->lineUsername_2->setText(db->getStringFromQuery(currentUser, "userName"));
+    ui->lineNameFirst_2->setText(db->getStringFromQuery(currentUser, "firstName"));
+    ui->lineNameLast_2->setText(db->getStringFromQuery(currentUser, "lastName"));
+    ui->lineStreetName_2->setText(db->getStringFromQuery(currentUser, "street"));
+    ui->lineStreetNumber_2->setText(db->getStringFromQuery(currentUser, "streetNr"));
+    ui->lineCityName_2->setText(db->getStringFromQuery(currentUser, "city"));
+    ui->lineCityPLZ_2->setText(db->getStringFromQuery(currentUser, "plz"));
+    ui->lineEmail_2->setText(db->getStringFromQuery(currentUser, "email"));
+
+
+    //show the frame!
     ui->stackedWidgetUser->setHidden(false);
-    QString firstName = "firstName";
-
-    QString name = db->getStringFromQuery(currentUser, firstName);
-
-
-    ui->lineNameFirst_2->setText(name);
-    /*
-    ui->lineNameLast_2->setText();
-    ui->lineStreetName_2->setText();
-    ui->lineStreetNumber_2->setText();
-    ui->lineCityName_2->setText();
-    ui->lineCityPLZ_2->setText();
-    ui->lineEmail_2->setText();
-*/
-
-    //set the page to the all previous orders page
+    //set the page to the user info page
     ui->stackedWidgetUser->setCurrentIndex(3);
 
 }
