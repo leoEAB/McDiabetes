@@ -40,7 +40,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="page0">
      <widget class="QWidget" name="formLayoutWidget">
@@ -1611,18 +1611,18 @@ V</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>lineNameFirst</tabstop>
-  <tabstop>lineNameLast</tabstop>
-  <tabstop>lineEmail</tabstop>
-  <tabstop>lineUsername</tabstop>
-  <tabstop>linePassword</tabstop>
-  <tabstop>lineStreetName</tabstop>
-  <tabstop>lineStreetNumber</tabstop>
-  <tabstop>lineCityName</tabstop>
-  <tabstop>lineCityPLZ</tabstop>
+  <tabstop>lineNameFirst_3</tabstop>
+  <tabstop>lineNameLast_3</tabstop>
+  <tabstop>lineEmail_3</tabstop>
+  <tabstop>lineStreetName_3</tabstop>
+  <tabstop>lineStreetNumber_3</tabstop>
+  <tabstop>lineCityName_3</tabstop>
+  <tabstop>lineCityPLZ_3</tabstop>
+  <tabstop>buttonCancelChangesAdmin</tabstop>
+  <tabstop>buttonSubmitChangesAdmin</tabstop>
+  <tabstop>buttonCancelInfoChangeUser</tabstop>
+  <tabstop>buttonSubmitInfoChangeUser</tabstop>
   <tabstop>buttonConnectDB</tabstop>
-  <tabstop>lineUser</tabstop>
-  <tabstop>linePass</tabstop>
   <tabstop>buttonLogin</tabstop>
   <tabstop>buttonQuit_3</tabstop>
   <tabstop>buttonListAllMenu</tabstop>
@@ -1653,17 +1653,17 @@ V</string>
   <tabstop>buttonToCheckout</tabstop>
   <tabstop>tableViewPrevOrderInfo</tabstop>
   <tabstop>tableViewPrevOrderTimestamps</tabstop>
-  <tabstop>buttonCancelInfoChangeUser</tabstop>
-  <tabstop>buttonSubmitInfoChangeUser</tabstop>
-  <tabstop>lineCityName_2</tabstop>
-  <tabstop>lineNameLast_2</tabstop>
-  <tabstop>lineNameFirst_2</tabstop>
-  <tabstop>lineUsername_2</tabstop>
-  <tabstop>lineStreetNumber_2</tabstop>
-  <tabstop>lineCityPLZ_2</tabstop>
-  <tabstop>lineEmail_2</tabstop>
-  <tabstop>lineStreetName_2</tabstop>
-  <tabstop>checkBoxEditUserInfo</tabstop>
+  <tabstop>lineUser</tabstop>
+  <tabstop>linePass</tabstop>
+  <tabstop>lineStreetNumber</tabstop>
+  <tabstop>lineNameLast</tabstop>
+  <tabstop>lineNameFirst</tabstop>
+  <tabstop>lineUsername</tabstop>
+  <tabstop>lineStreetName</tabstop>
+  <tabstop>lineCityName</tabstop>
+  <tabstop>lineEmail</tabstop>
+  <tabstop>linePassword</tabstop>
+  <tabstop>lineCityPLZ</tabstop>
   <tabstop>buttonQuit_4</tabstop>
   <tabstop>lineDatenbankName</tabstop>
   <tabstop>linePassDB</tabstop>
@@ -1682,6 +1682,18 @@ V</string>
   <tabstop>tableViewOrderSummary</tabstop>
   <tabstop>buttonConfirmOrder</tabstop>
   <tabstop>buttonCancelOrder</tabstop>
+  <tabstop>buttonEditSelectedUser</tabstop>
+  <tabstop>buttonDeleteSelectedUser</tabstop>
+  <tabstop>lineStreetName_2</tabstop>
+  <tabstop>lineNameFirst_2</tabstop>
+  <tabstop>checkBoxEditUserInfo</tabstop>
+  <tabstop>lineUsername_3</tabstop>
+  <tabstop>lineUsername_2</tabstop>
+  <tabstop>lineStreetNumber_2</tabstop>
+  <tabstop>lineNameLast_2</tabstop>
+  <tabstop>lineEmail_2</tabstop>
+  <tabstop>lineCityName_2</tabstop>
+  <tabstop>lineCityPLZ_2</tabstop>
  </tabstops>
  <resources/>
  <connections>
