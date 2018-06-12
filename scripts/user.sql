@@ -35,7 +35,6 @@ create table cart (
 	price dec(5,2),
     
 	FOREIGN KEY (userName) REFERENCES user(userName) ON UPDATE CASCADE ON DELETE CASCADE
-
 );
 
 create table orderInfo (
@@ -51,9 +50,9 @@ create table orderInfo (
     city varchar(20),
     
     
-	FOREIGN KEY (userName) REFERENCES user(userName) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (email) REFERENCES person(email) ON UPDATE CASCADE ON DELETE CASCADE
-
+	FOREIGN KEY (userName) REFERENCES user(userName) ON UPDATE CASCADE ON DELETE CASCADE
+    -- ,
+	-- FOREIGN KEY (email) REFERENCES person(email) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 create table orderContents(
@@ -65,7 +64,7 @@ create table orderContents(
 	price dec(5,2),
 
 	FOREIGN KEY (userName) REFERENCES orderInfo(userName) ON UPDATE CASCADE ON DELETE CASCADE
-		
+	
 );
 
 
@@ -73,10 +72,12 @@ create table orderContents(
 -- tests
 
 insert into user values ("mihi", "mihi", "a");
+insert into user values ("leo", "leo", "a");
 insert into user values ("user", "user", "u");
 insert into user values ("user1", "user1", "u");
 
 select * from user left outer join person on user.userName = person.userName;
+
 
 select * from cart;
 

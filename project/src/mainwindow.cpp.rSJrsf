@@ -5,7 +5,6 @@ QString MainWindow::itemRowString = "";
 QString MainWindow::itemOptionsRowString = "";
 QString MainWindow::currentUser = "";
 QString MainWindow::orderInfoString = "";
-QString MainWindow::selectedUser = "";
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,13 +22,21 @@ MainWindow::MainWindow(QWidget *parent) :
     //countdownConnect = new QTimer();
 
     updateTimeLabel();
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+//TBC!!!
+void MainWindow::updateTimeLabel(){
+    QDateTime currentTime;
+    currentTime.setTime(currentTime.currentDateTime().time());
+
+    ui->timeEditSetTime->setTime(currentTime.time());
+}
+
 
 //"global" functions (signals from other buttons call this func)
 void MainWindow::on_buttonLogout_clicked()
@@ -202,13 +209,6 @@ void MainWindow::on_buttonListOrders_clicked()
    db->listAllOrders(ui->tableAllOrdersTimestampAdmin);
 }
 
-void MainWindow::on_tableAllOrdersTimestampAdmin_clicked(const QModelIndex &index)
-{
-    int row = index.row();
-    QDateTime dateTime = index.sibling(row, 1).data().toDateTime();
-    db->showOrderContents(dateTime, ui->tableAllOrdersInfoAdmin);
-}
-
 void MainWindow::on_buttonListUsers_clicked()
 {
     if(ui->stackedWidgetAdmin->isHidden()){
@@ -219,11 +219,11 @@ void MainWindow::on_buttonListUsers_clicked()
 
     db->listAllUsers(ui->tableAllUsersAdmin);
 }
+
 //-------------------------------------------------
 
 
 //USER SCREEN ----------------------------------
-
 void MainWindow::on_buttonNewOrder_clicked()
 {
     //firstly, show the widget!
@@ -251,13 +251,6 @@ void MainWindow::on_buttonShowPrevOrders_clicked()
 
 }
 
-void MainWindow::on_tableViewPrevOrderTimestamps_clicked(const QModelIndex &index)
-{
-    int row = index.row();
-    QDateTime dateTime = index.sibling(row, 0).data().toDateTime();
-    db->showOrderContents(dateTime, ui->tableViewPrevOrderInfo);
-}
-
 void MainWindow::on_buttonUserInfo_clicked()
 {
     ui->lineUsername_2->setText(db->getStringFromQuery(currentUser, "userName"));
@@ -277,7 +270,6 @@ void MainWindow::on_buttonUserInfo_clicked()
 
 }
 
-//check box which enables editing of the lines in the user info section
 void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
 {
     if(ui->checkBoxEditUserInfo->isChecked() || arg1) {
@@ -304,26 +296,15 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
     }
 }
 
-//TODO
-bool MainWindow::userInfoChanged(){
-    //if(ui->lineNameFirst_2->text)
-    return false;
+void MainWindow::on_tableViewPrevOrderTimestamps_clicked(const QModelIndex &index)
+{
+    int row = index.row();
+    QDateTime dateTime = index.sibling(row, 0).data().toDateTime();
+    db->showOrderContents(dateTime, ui->tableViewPrevOrderInfo);
 }
-
-
 
 
 //ORDER PAGE
-
-//updates the time section in the new order page
-void MainWindow::updateTimeLabel(){
-    QDateTime currentTime;
-    currentTime.setTime(currentTime.currentDateTime().time());
-
-    ui->timeEditSetTime->setTime(currentTime.time());
-}
-
-//TO-DO
 void MainWindow::on_checkBoxSetTime_stateChanged(int arg1)
 {
     if(ui->checkBoxEditUserInfo->isChecked() || arg1) {
@@ -427,8 +408,6 @@ void MainWindow::on_buttonConfirmOrder_clicked()
         db->listAllOrdersUser(currentUser, ui->tableViewPrevOrderTimestamps);
         ui->stackedWidgetUser->setCurrentIndex(2);
 
-        //db->clearCart(currentUser, ui->tableViewCartUser);
-
     } else {
         QMessageBox::critical(
           this,
@@ -506,25 +485,9 @@ void MainWindow::on_buttonToLoginNewUserSuccess_clicked()
 
 //----------------------------------------------
 
-
-
-void MainWindow::on_buttonEditSelectedUser_clicked()
-{
-    ui->lineUsername_3->setText(db->getStringFromQuery(selectedUser, "userName"));
-    ui->lineNameFirst_3->setText(db->getStringFromQuery(selectedUser, "firstName"));
-    ui->lineNameLast_3->setText(db->getStringFromQuery(selectedUser, "lastName"));
-    ui->lineStreetName_3->setText(db->getStringFromQuery(selectedUser, "street"));
-    ui->lineStreetNumber_3->setText(db->getStringFromQuery(selectedUser, "streetNr"));
-    ui->lineCityName_3->setText(db->getStringFromQuery(selectedUser, "city"));
-    ui->lineCityPLZ_3->setText(db->getStringFromQuery(selectedUser, "plz"));
-    ui->lineEmail_3->setText(db->getStringFromQuery(selectedUser, "email"));
-
-
-    ui->stackedWidgetAdmin->setCurrentIndex(3);
-}
-
-void MainWindow::on_tableAllUsersAdmin_clicked(const QModelIndex &index)
+void MainWindow::on_tableAllOrdersTimestampAdmin_clicked(const QModelIndex &index)
 {
     int row = index.row();
-    selectedUser = index.sibling(row, 0).data().toString();
+    QDateTime dateTime = index.sibling(row, 1).data().toDateTime();
+    db->showOrderContents(dateTime, ui->tableAllOrdersInfoAdmin);
 }

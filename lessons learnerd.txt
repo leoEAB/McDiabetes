@@ -1,4 +1,6 @@
 - Street number soll lieber als VARCHAR() gespeichert werden, da die suchanfragen generalisiert werden können
 (z.B wir brauchen jetzt eine extra Funktion um die stretNr zu bekommen!!!)
 
-- 
+-DB Funktionen sollen lieber BOOL sein statt VOID, da sie von einer Internetverbindung abhängig sind
+
+-Bug bei Produkten mit langen namen
