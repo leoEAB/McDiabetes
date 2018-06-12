@@ -5,7 +5,7 @@ QString MainWindow::itemRowString = "";
 QString MainWindow::itemOptionsRowString = "";
 QString MainWindow::currentUser = "";
 QString MainWindow::orderInfoString = "";
-QString MainWindow::selectedUser = "";
+QString MainWindow::selectedUser = ""; //this is the selection of the user's username when you click in the table
 QString MainWindow::selectedUserUserName = "";
 QString MainWindow::selectedUserFirstName = "";
 QString MainWindow::selectedUserLastName = "";
@@ -229,6 +229,102 @@ void MainWindow::on_buttonListUsers_clicked()
 
     db->listAllUsers(ui->tableAllUsersAdmin);
 }
+
+void MainWindow::on_buttonEditSelectedUser_clicked()
+{
+    selectedUserUserName = db->getStringFromQuery(selectedUser, "userName");
+    selectedUserFirstName = db->getStringFromQuery(selectedUser, "firstName");
+    selectedUserLastName = db->getStringFromQuery(selectedUser, "lastName");
+    selectedUserStreet = db->getStringFromQuery(selectedUser, "street");
+    selectedUserStreetNr = db->getStringFromQuery(selectedUser, "streetNr");
+    selectedUserCity = db->getStringFromQuery(selectedUser, "city");
+    selectedUserPlz = db->getStringFromQuery(selectedUser, "plz");
+    selectedUserEmail = db->getStringFromQuery(selectedUser, "email");
+
+    ui->lineUsername_3->setText(selectedUserUserName);
+    ui->lineNameFirst_3->setText(selectedUserFirstName);
+    ui->lineNameLast_3->setText(selectedUserLastName);
+    ui->lineStreetName_3->setText(selectedUserStreet);
+    ui->lineStreetNumber_3->setText(selectedUserStreetNr);
+    ui->lineCityName_3->setText(selectedUserCity);
+    ui->lineCityPLZ_3->setText(selectedUserPlz);
+    ui->lineEmail_3->setText(selectedUserEmail);
+
+    ui->stackedWidgetAdmin->setCurrentIndex(3);
+
+}
+
+void MainWindow::on_tableAllUsersAdmin_clicked(const QModelIndex &index)
+{
+    int row = index.row();
+    selectedUser = index.sibling(row, 0).data().toString();
+}
+
+void MainWindow::on_buttonSubmitChangesAdmin_clicked()
+{
+
+    if(db->updateUserData(   selectedUserUserName,
+                             ui->lineNameFirst_3->text(),
+                             ui->lineNameLast_3->text(),
+                             ui->lineStreetName_3->text(),
+                             ui->lineStreetNumber_3->text().toInt(),
+                             ui->lineCityName_3->text(),
+                             ui->lineCityPLZ_3->text(),
+                             ui->lineEmail_3->text()
+                         )
+
+        ) {
+            QMessageBox::information(
+              this,
+              tr("McSuccess!"),
+              tr("User Info changed!")
+            );
+
+            //update the user info fields by pulling directly from DB
+            on_buttonEditSelectedUser_clicked();
+        } else {
+
+            QMessageBox::critical(
+              this,
+              tr("McFail"),
+              tr("Could not update user info!")
+            );
+        }
+
+}
+
+void MainWindow::on_buttonCancelChangesAdmin_clicked()
+{
+    ui->lineUsername_3->setText(selectedUserUserName);
+    ui->lineNameFirst_3->setText(selectedUserFirstName);
+    ui->lineNameLast_3->setText(selectedUserLastName);
+    ui->lineStreetName_3->setText(selectedUserStreet);
+    ui->lineStreetNumber_3->setText(selectedUserStreetNr);
+    ui->lineCityName_3->setText(selectedUserCity);
+    ui->lineCityPLZ_3->setText(selectedUserPlz);
+    ui->lineEmail_3->setText(selectedUserEmail);
+}
+
+void MainWindow::on_buttonDeleteSelectedUser_clicked()
+{
+    if(db->deleteUser(selectedUser)){
+        QMessageBox::information(
+          this,
+          tr("McSuccess!"),
+          tr("GONE!")
+        );
+
+        on_buttonListUsers_clicked();
+
+    } else {
+        QMessageBox::critical(
+          this,
+          tr("McFail"),
+          tr("STILL HERE...")
+        );
+    }
+    ;
+}
 //-------------------------------------------------
 
 
@@ -270,14 +366,23 @@ void MainWindow::on_tableViewPrevOrderTimestamps_clicked(const QModelIndex &inde
 
 void MainWindow::on_buttonUserInfo_clicked()
 {
-    ui->lineUsername_2->setText(db->getStringFromQuery(currentUser, "userName"));
-    ui->lineNameFirst_2->setText(db->getStringFromQuery(currentUser, "firstName"));
-    ui->lineNameLast_2->setText(db->getStringFromQuery(currentUser, "lastName"));
-    ui->lineStreetName_2->setText(db->getStringFromQuery(currentUser, "street"));
-    ui->lineStreetNumber_2->setText(db->getStringFromQuery(currentUser, "streetNr"));
-    ui->lineCityName_2->setText(db->getStringFromQuery(currentUser, "city"));
-    ui->lineCityPLZ_2->setText(db->getStringFromQuery(currentUser, "plz"));
-    ui->lineEmail_2->setText(db->getStringFromQuery(currentUser, "email"));
+    selectedUserUserName = db->getStringFromQuery(currentUser, "userName");
+    selectedUserFirstName = db->getStringFromQuery(currentUser, "firstName");
+    selectedUserLastName = db->getStringFromQuery(currentUser, "lastName");
+    selectedUserStreet = db->getStringFromQuery(currentUser, "street");
+    selectedUserStreetNr = db->getStringFromQuery(currentUser, "streetNr");
+    selectedUserCity = db->getStringFromQuery(currentUser, "city");
+    selectedUserPlz = db->getStringFromQuery(currentUser, "plz");
+    selectedUserEmail = db->getStringFromQuery(currentUser, "email");
+
+    ui->lineUsername_2->setText(selectedUserUserName);
+    ui->lineNameFirst_2->setText(selectedUserFirstName);
+    ui->lineNameLast_2->setText(selectedUserLastName);
+    ui->lineStreetName_2->setText(selectedUserStreet);
+    ui->lineStreetNumber_2->setText(selectedUserStreetNr);
+    ui->lineCityName_2->setText(selectedUserCity);
+    ui->lineCityPLZ_2->setText(selectedUserPlz);
+    ui->lineEmail_2->setText(selectedUserEmail);
 
 
     //show the frame!
@@ -292,7 +397,7 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
 {
     if(ui->checkBoxEditUserInfo->isChecked() || arg1) {
         ui->buttonCancelInfoChangeUser->setEnabled(true);
-        //ui->buttonSubmitInfoChangeUser->setEnabled(true);
+        ui->buttonSubmitInfoChangeUser->setEnabled(true);
         ui->lineCityName_2->setEnabled(true);
         ui->lineCityPLZ_2->setEnabled(true);
         ui->lineEmail_2->setEnabled(true);
@@ -302,7 +407,7 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
         ui->lineStreetNumber_2->setEnabled(true);
     } else {
         ui->buttonCancelInfoChangeUser->setEnabled(false);
-       //ui->buttonSubmitInfoChangeUser->setEnabled(false);
+        ui->buttonSubmitInfoChangeUser->setEnabled(false);
         ui->lineCityName_2->setEnabled(false);
         ui->lineCityPLZ_2->setEnabled(false);
         ui->lineEmail_2->setEnabled(false);
@@ -314,16 +419,22 @@ void MainWindow::on_checkBoxEditUserInfo_stateChanged(int arg1)
     }
 }
 
-//TODO
-bool MainWindow::userInfoChanged(){
-    //if(ui->lineNameFirst_2->text)
-    return false;
+void MainWindow::on_buttonCancelInfoChangeUser_clicked()
+{
+    ui->lineUsername_2->setText(selectedUserUserName);
+    ui->lineNameFirst_2->setText(selectedUserFirstName);
+    ui->lineNameLast_2->setText(selectedUserLastName);
+    ui->lineStreetName_2->setText(selectedUserStreet);
+    ui->lineStreetNumber_2->setText(selectedUserStreetNr);
+    ui->lineCityName_2->setText(selectedUserCity);
+    ui->lineCityPLZ_2->setText(selectedUserPlz);
+    ui->lineEmail_2->setText(selectedUserEmail);
 }
 
+//---------------------------------------------------------------------------------
 
 
-
-//ORDER PAGE
+//ORDER PAGE -----------------------------------------------------------------------
 
 //updates the time section in the new order page
 void MainWindow::updateTimeLabel(){
@@ -517,50 +628,34 @@ void MainWindow::on_buttonToLoginNewUserSuccess_clicked()
 //----------------------------------------------
 
 
-
-void MainWindow::on_buttonEditSelectedUser_clicked()
+void MainWindow::on_buttonSubmitInfoChangeUser_clicked()
 {
-    selectedUserUserName = db->getStringFromQuery(selectedUser, "userName");
-    selectedUserFirstName = db->getStringFromQuery(selectedUser, "firstName");
-    selectedUserLastName = db->getStringFromQuery(selectedUser, "lastName");
-    selectedUserStreet = db->getStringFromQuery(selectedUser, "street");
-    selectedUserStreetNr = db->getStringFromQuery(selectedUser, "streetNr");
-    selectedUserCity = db->getStringFromQuery(selectedUser, "city");
-    selectedUserPlz = db->getStringFromQuery(selectedUser, "plz");
-    selectedUserEmail = db->getStringFromQuery(selectedUser, "email");
+    if(db->updateUserData(   currentUser,
+                             ui->lineNameFirst_2->text(),
+                             ui->lineNameLast_2->text(),
+                             ui->lineStreetName_2->text(),
+                             ui->lineStreetNumber_2->text().toInt(),
+                             ui->lineCityName_2->text(),
+                             ui->lineCityPLZ_2->text(),
+                             ui->lineEmail_2->text()
+                         )
 
-    ui->lineUsername_3->setText(selectedUserUserName);
-    ui->lineNameFirst_3->setText(selectedUserFirstName);
-    ui->lineNameLast_3->setText(selectedUserLastName);
-    ui->lineStreetName_3->setText(selectedUserStreet);
-    ui->lineStreetNumber_3->setText(selectedUserStreetNr);
-    ui->lineCityName_3->setText(selectedUserCity);
-    ui->lineCityPLZ_3->setText(selectedUserPlz);
-    ui->lineEmail_3->setText(selectedUserEmail);
+        ) {
+            QMessageBox::information(
+              this,
+              tr("McSuccess!"),
+              tr("User Info changed!")
+            );
 
-    ui->stackedWidgetAdmin->setCurrentIndex(3);
+            //update the user info fields by pulling directly from DB
+            on_buttonUserInfo_clicked();
 
-}
+        } else {
 
-void MainWindow::on_tableAllUsersAdmin_clicked(const QModelIndex &index)
-{
-    int row = index.row();
-    selectedUser = index.sibling(row, 0).data().toString();
-}
-
-void MainWindow::on_buttonSubmitChangesAdmin_clicked()
-{
-    db->updateUserData();
-}
-
-void MainWindow::on_buttonCancelChangesAdmin_clicked()
-{
-    ui->lineUsername_3->setText(selectedUserUserName);
-    ui->lineNameFirst_3->setText(selectedUserFirstName);
-    ui->lineNameLast_3->setText(selectedUserLastName);
-    ui->lineStreetName_3->setText(selectedUserStreet);
-    ui->lineStreetNumber_3->setText(selectedUserStreetNr);
-    ui->lineCityName_3->setText(selectedUserCity);
-    ui->lineCityPLZ_3->setText(selectedUserPlz);
-    ui->lineEmail_3->setText(selectedUserEmail);
+            QMessageBox::critical(
+              this,
+              tr("McFail"),
+              tr("Could not update user info!")
+            );
+        }
 }

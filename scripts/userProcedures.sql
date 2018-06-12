@@ -2,6 +2,8 @@ drop procedure if exists addUser;
 drop procedure if exists deleteUser;
 drop procedure if exists addToCart;
 drop procedure if exists completeOrder;
+drop procedure if exists updateUserInfo;
+drop procedure if exists deleteUser;
 
 
 DELIMITER |
@@ -93,8 +95,46 @@ CREATE PROCEDURE completeOrder( IN username VARCHAR(20))
 DELIMITER ;
 
 
+DELIMITER |
+CREATE PROCEDURE updateUserInfo ( 	IN username VARCHAR(20),
+									IN firstname VARCHAR(20),
+									IN lastname varchar(20),
+									IN street varchar(20),
+									IN streetNr int,
+									IN city varchar(20),
+									IN plz varchar(6),
+									IN email varchar(30)
+                                )
+	BEGIN
+		UPDATE person AS P SET 	P.firstName = firstname, 
+								P.lastName = lastname,
+                                P.street = street,
+                                P.streetNr = streetNr,
+                                P.plz = plz,
+                                P.city = city,
+                                P.email = email
+		WHERE P.userName = username;
+	END;
+|
+DELIMITER ;
+
+
+
+DELIMITER |
+CREATE PROCEDURE deleteUser( IN username VARCHAR(20))
+	BEGIN
+		DELETE FROM user WHERE user.userName = username;
+	END;
+|
+DELIMITER ;
+
+
 -- tests
 -- CALL addToCart("mihi", "Fries", "small");
 
 -- CALL completeOrder("mihi94");
 -- CALL completeOrder("user");
+
+select * from person where person.userName = "john";
+
+CALL updateUserInfo("john", "test", "testname", "teststreet", 11, "testtown", "11001", "emailCHANGE");

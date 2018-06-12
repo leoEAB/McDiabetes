@@ -382,6 +382,56 @@ public:
         table->setAlternatingRowColors(true);
     }
 
+
+    bool updateUserData(QString userName,
+                             QString firstName,
+                             QString lastName,
+                             QString street,
+                             int streetNr,
+                             QString city,
+                             QString plz,
+                             QString email) {
+
+        QSqlQuery updateData;
+
+        updateData.prepare("CALL updateUserInfo(:username, "
+                           "                    :firstname,"
+                           "                    :lastname,"
+                           "                    :street,"
+                           "                    :streetNr,"
+                           "                    :city,"
+                           "                    :plz,"
+                           "                    :email)");
+        updateData.bindValue(":username", userName);
+        updateData.bindValue(":firstname", firstName);
+        updateData.bindValue(":lastname", lastName);
+        updateData.bindValue(":street", street);
+        updateData.bindValue(":streetNr", streetNr);
+        updateData.bindValue(":city", city);
+        updateData.bindValue(":plz", plz);
+        updateData.bindValue(":email", email);
+
+        if(updateData.exec()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    bool deleteUser(QString username) {
+        QSqlQuery deleteQuery;
+
+        deleteQuery.prepare("CALL deleteUser(:username)");
+        deleteQuery.bindValue(":username", username);
+
+        if(deleteQuery.exec()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 //---------------------------------------------------------------------------------------------
 
 //NEW USER PAGE -------------------------------------------------------------------------
@@ -411,6 +461,7 @@ public:
 
     }
 
+//-----------------------------------------------------------------
 
 private:
 

@@ -76,7 +76,6 @@ private slots:
     void on_buttonNewOrder_clicked(); //new order for user
     void on_buttonShowPrevOrders_clicked(); //show previous orders for this user
     void on_buttonUserInfo_clicked(); //user info + editing
-    bool userInfoChanged(); //enables the submit changes button if any of the labels got their text changed
 
     //PAGE 4 - New user
     void clearNewUserInput(); //clears all the fields
@@ -119,10 +118,15 @@ private slots:
 
     void on_tableAllUsersAdmin_clicked(const QModelIndex &index);
 
-
     void on_buttonSubmitChangesAdmin_clicked();
 
     void on_buttonCancelChangesAdmin_clicked();
+
+    void on_buttonDeleteSelectedUser_clicked();
+
+    void on_buttonCancelInfoChangeUser_clicked();
+
+    void on_buttonSubmitInfoChangeUser_clicked();
 
 private:
     Ui::MainWindow *ui;
