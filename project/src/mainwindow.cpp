@@ -6,6 +6,16 @@ QString MainWindow::itemOptionsRowString = "";
 QString MainWindow::currentUser = "";
 QString MainWindow::orderInfoString = "";
 QString MainWindow::selectedUser = "";
+QString MainWindow::selectedUserUserName = "";
+QString MainWindow::selectedUserFirstName = "";
+QString MainWindow::selectedUserLastName = "";
+QString MainWindow::selectedUserStreet = "";
+QString MainWindow::selectedUserStreetNr = "";
+QString MainWindow::selectedUserCity = "";
+QString MainWindow::selectedUserPlz = "";
+QString MainWindow::selectedUserEmail = "";
+
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -510,21 +520,47 @@ void MainWindow::on_buttonToLoginNewUserSuccess_clicked()
 
 void MainWindow::on_buttonEditSelectedUser_clicked()
 {
-    ui->lineUsername_3->setText(db->getStringFromQuery(selectedUser, "userName"));
-    ui->lineNameFirst_3->setText(db->getStringFromQuery(selectedUser, "firstName"));
-    ui->lineNameLast_3->setText(db->getStringFromQuery(selectedUser, "lastName"));
-    ui->lineStreetName_3->setText(db->getStringFromQuery(selectedUser, "street"));
-    ui->lineStreetNumber_3->setText(db->getStringFromQuery(selectedUser, "streetNr"));
-    ui->lineCityName_3->setText(db->getStringFromQuery(selectedUser, "city"));
-    ui->lineCityPLZ_3->setText(db->getStringFromQuery(selectedUser, "plz"));
-    ui->lineEmail_3->setText(db->getStringFromQuery(selectedUser, "email"));
+    selectedUserUserName = db->getStringFromQuery(selectedUser, "userName");
+    selectedUserFirstName = db->getStringFromQuery(selectedUser, "firstName");
+    selectedUserLastName = db->getStringFromQuery(selectedUser, "lastName");
+    selectedUserStreet = db->getStringFromQuery(selectedUser, "street");
+    selectedUserStreetNr = db->getStringFromQuery(selectedUser, "streetNr");
+    selectedUserCity = db->getStringFromQuery(selectedUser, "city");
+    selectedUserPlz = db->getStringFromQuery(selectedUser, "plz");
+    selectedUserEmail = db->getStringFromQuery(selectedUser, "email");
 
+    ui->lineUsername_3->setText(selectedUserUserName);
+    ui->lineNameFirst_3->setText(selectedUserFirstName);
+    ui->lineNameLast_3->setText(selectedUserLastName);
+    ui->lineStreetName_3->setText(selectedUserStreet);
+    ui->lineStreetNumber_3->setText(selectedUserStreetNr);
+    ui->lineCityName_3->setText(selectedUserCity);
+    ui->lineCityPLZ_3->setText(selectedUserPlz);
+    ui->lineEmail_3->setText(selectedUserEmail);
 
     ui->stackedWidgetAdmin->setCurrentIndex(3);
+
 }
 
 void MainWindow::on_tableAllUsersAdmin_clicked(const QModelIndex &index)
 {
     int row = index.row();
     selectedUser = index.sibling(row, 0).data().toString();
+}
+
+void MainWindow::on_buttonSubmitChangesAdmin_clicked()
+{
+    db->updateUserData();
+}
+
+void MainWindow::on_buttonCancelChangesAdmin_clicked()
+{
+    ui->lineUsername_3->setText(selectedUserUserName);
+    ui->lineNameFirst_3->setText(selectedUserFirstName);
+    ui->lineNameLast_3->setText(selectedUserLastName);
+    ui->lineStreetName_3->setText(selectedUserStreet);
+    ui->lineStreetNumber_3->setText(selectedUserStreetNr);
+    ui->lineCityName_3->setText(selectedUserCity);
+    ui->lineCityPLZ_3->setText(selectedUserPlz);
+    ui->lineEmail_3->setText(selectedUserEmail);
 }

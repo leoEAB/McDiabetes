@@ -716,7 +716,7 @@
          <item>
           <widget class="QPushButton" name="buttonCancelChangesAdmin">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string>Cancel Changes</string>
@@ -726,7 +726,7 @@
          <item>
           <widget class="QPushButton" name="buttonSubmitChangesAdmin">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string>Submit Changes</string>
@@ -1746,6 +1746,22 @@ V</string>
     <hint type="destinationlabel">
      <x>435</x>
      <y>178</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonCancelChangesAdmin</sender>
+   <signal>clicked()</signal>
+   <receiver>buttonEditSelectedUser</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>343</x>
+     <y>570</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>323</x>
+     <y>165</y>
     </hint>
    </hints>
   </connection>

@@ -33,16 +33,8 @@ class MainWindow : public QMainWindow
     //variable to store the current order summary choice
     static QString orderInfoString;
 
-    //variable to store selected user info in the admin screen (for editing their info)
+    //variable to store selected user in the admin screen (for editing their info)
     static QString selectedUser;
-    static QString selectedUserUserName;
-    static QString selectedUserFirstName;
-    static QString selectedUserLastName;
-    static QString selectedUserStreet;
-    static QString selectedUserStreetNr;
-    static QString selectedUserCity;
-    static QString selectedUserPlz;
-    static QString selectedUserEmail;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -121,9 +113,7 @@ private slots:
 
 
     void on_buttonSubmitChangesAdmin_clicked();
-
-    void on_buttonCancelChangesAdmin_clicked();
-
+    
 private:
     Ui::MainWindow *ui;
 

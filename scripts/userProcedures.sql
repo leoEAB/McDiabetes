@@ -50,8 +50,7 @@ DELIMITER ;
 DELIMITER |
 CREATE PROCEDURE completeOrder( IN username VARCHAR(20))
 	BEGIN
-		-- trigger will add date and time before every insert, for both tables
-        
+		-- trigger inserts a datetime in orderInfo before inserts
 		INSERT INTO orderInfo (	userName,
 								total,
 								firstName,
@@ -74,14 +73,17 @@ CREATE PROCEDURE completeOrder( IN username VARCHAR(20))
 		FROM user AS U, person AS P, cart AS C
         WHERE U.userName = username AND P.userName = username AND C.userName = username;
 
+
+		-- triger inserts datetime() before inserts into orderContents
 		INSERT INTO orderContents (	userName,
 									type,
 									name,
 									size,
 									price
 								)
-                                
-		SELECT userName, type, name, size, price FROM user AS U, cart AS C WHERE U.userName = username AND C.userName = username;
+		SELECT userName, type, name, size, price 
+        FROM user AS U, cart AS C 
+        WHERE U.userName = username AND C.userName = username;
         
         
 
