@@ -4,6 +4,7 @@ drop procedure if exists addToCart;
 drop procedure if exists completeOrder;
 drop procedure if exists updateUserInfo;
 drop procedure if exists deleteUser;
+drop procedure if exists deleteMenuItem;
 
 
 DELIMITER |
@@ -27,11 +28,9 @@ CREATE PROCEDURE addUser(	IN username VARCHAR(20),
 DELIMITER ;
 
 DELIMITER |
-CREATE PROCEDURE deleteUser (IN username VARCHAR(20))
+CREATE PROCEDURE deleteUser( IN username VARCHAR(20))
 	BEGIN
 		DELETE FROM user WHERE user.userName = username;
-        DELETE FROM person WHERE person.userName = username;
-        DELETE FROM cart WHERE cart.userName = username;
 	END;
 |
 DELIMITER ;
@@ -119,11 +118,14 @@ CREATE PROCEDURE updateUserInfo ( 	IN username VARCHAR(20),
 DELIMITER ;
 
 
-
 DELIMITER |
-CREATE PROCEDURE deleteUser( IN username VARCHAR(20))
+CREATE PROCEDURE deleteMenuItem( 	IN itemName VARCHAR(50),
+									IN itemSize VARCHAR(20)
+								)
 	BEGIN
-		DELETE FROM user WHERE user.userName = username;
+    
+		DELETE FROM items WHERE items.name = itemName AND items.size = itemSize;
+    
 	END;
 |
 DELIMITER ;
@@ -135,6 +137,3 @@ DELIMITER ;
 -- CALL completeOrder("mihi94");
 -- CALL completeOrder("user");
 
-select * from person where person.userName = "john";
-
-CALL updateUserInfo("john", "test", "testname", "teststreet", 11, "testtown", "11001", "emailCHANGE");

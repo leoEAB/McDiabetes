@@ -336,8 +336,10 @@ public:
         tableViewModel->setQuery("select UD.userName, email, firstName, lastName, street, streetNr, plz, city from user as UI RIGHT OUTER JOIN person as UD ON (UI.userName = UD.userName)");
 
         table->setModel(tableViewModel);
+        //table->resizeColumnsToContents();
         table->resizeColumnToContents(1);
         table->resizeColumnToContents(5);
+        table->resizeColumnToContents(6);
         table->setAlternatingRowColors(true);
     }
 
@@ -424,6 +426,20 @@ public:
 
         deleteQuery.prepare("CALL deleteUser(:username)");
         deleteQuery.bindValue(":username", username);
+
+        if(deleteQuery.exec()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    bool deleteSelectedMenuItem(QString name, QString size) {
+        QSqlQuery deleteQuery;
+
+        deleteQuery.prepare("CALL deleteMenuItem(:name, :size)");
+        deleteQuery.bindValue(":name", name);
+        deleteQuery.bindValue(":size", size);
 
         if(deleteQuery.exec()){
             return true;

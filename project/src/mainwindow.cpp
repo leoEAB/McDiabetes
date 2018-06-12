@@ -5,7 +5,9 @@ QString MainWindow::itemRowString = "";
 QString MainWindow::itemOptionsRowString = "";
 QString MainWindow::currentUser = "";
 QString MainWindow::orderInfoString = "";
+
 QString MainWindow::selectedUser = ""; //this is the selection of the user's username when you click in the table
+
 QString MainWindow::selectedUserUserName = "";
 QString MainWindow::selectedUserFirstName = "";
 QString MainWindow::selectedUserLastName = "";
@@ -15,7 +17,16 @@ QString MainWindow::selectedUserCity = "";
 QString MainWindow::selectedUserPlz = "";
 QString MainWindow::selectedUserEmail = "";
 
+QString MainWindow::selectedItemName = "";
+QString MainWindow::selectedItemSize = "";
 
+QString MainWindow::newItemCategory = "";
+QString MainWindow::newItemType = "";
+QString MainWindow::newItemName = "";
+QString MainWindow::newItemSizeReg = "";
+QString MainWindow::newItemSizeSmall = "";
+QString MainWindow::newItemSizeMed = "";
+QString MainWindow::newItemSizeLarge = "";
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -303,6 +314,14 @@ void MainWindow::on_buttonCancelChangesAdmin_clicked()
     ui->lineCityName_3->setText(selectedUserCity);
     ui->lineCityPLZ_3->setText(selectedUserPlz);
     ui->lineEmail_3->setText(selectedUserEmail);
+
+    QMessageBox::information(
+      this,
+      tr("McOK!"),
+      tr("User Info not changed!")
+    );
+
+    on_buttonListUsers_clicked();
 }
 
 void MainWindow::on_buttonDeleteSelectedUser_clicked()
@@ -325,6 +344,36 @@ void MainWindow::on_buttonDeleteSelectedUser_clicked()
     }
     ;
 }
+
+void MainWindow::on_tableListAllMenuItems_clicked(const QModelIndex &index)
+{
+    ui->buttonDeleteItemAdmin->setEnabled(true);
+
+    int row = index.row();
+    selectedItemName = index.sibling(row, 2).data().toString();
+    selectedItemSize = index.sibling(row, 3).data().toString();
+
+}
+
+void MainWindow::on_buttonDeleteItemAdmin_clicked()
+{
+    if(db->deleteSelectedMenuItem(selectedItemName, selectedItemSize)) {
+        QMessageBox::information(
+          this,
+          tr("McSuccess!"),
+          tr("Item deleted!")
+        );
+
+        on_buttonListAllMenu_clicked();
+    } else {
+        QMessageBox::critical(
+          this,
+          tr("McFail"),
+          tr("Could not delete item at the moment")
+        );
+    };
+}
+
 //-------------------------------------------------
 
 
@@ -430,6 +479,39 @@ void MainWindow::on_buttonCancelInfoChangeUser_clicked()
     ui->lineCityPLZ_2->setText(selectedUserPlz);
     ui->lineEmail_2->setText(selectedUserEmail);
 }
+
+void MainWindow::on_buttonSubmitInfoChangeUser_clicked()
+{
+    if(db->updateUserData(   currentUser,
+                             ui->lineNameFirst_2->text(),
+                             ui->lineNameLast_2->text(),
+                             ui->lineStreetName_2->text(),
+                             ui->lineStreetNumber_2->text().toInt(),
+                             ui->lineCityName_2->text(),
+                             ui->lineCityPLZ_2->text(),
+                             ui->lineEmail_2->text()
+                         )
+
+        ) {
+            QMessageBox::information(
+              this,
+              tr("McSuccess!"),
+              tr("User Info changed!")
+            );
+
+            //update the user info fields by pulling directly from DB
+            on_buttonUserInfo_clicked();
+
+        } else {
+
+            QMessageBox::critical(
+              this,
+              tr("McFail"),
+              tr("Could not update user info!")
+            );
+        }
+}
+
 
 //---------------------------------------------------------------------------------
 
@@ -628,34 +710,56 @@ void MainWindow::on_buttonToLoginNewUserSuccess_clicked()
 //----------------------------------------------
 
 
-void MainWindow::on_buttonSubmitInfoChangeUser_clicked()
+
+void MainWindow::on_buttonAddItemAdmin_clicked()
 {
-    if(db->updateUserData(   currentUser,
-                             ui->lineNameFirst_2->text(),
-                             ui->lineNameLast_2->text(),
-                             ui->lineStreetName_2->text(),
-                             ui->lineStreetNumber_2->text().toInt(),
-                             ui->lineCityName_2->text(),
-                             ui->lineCityPLZ_2->text(),
-                             ui->lineEmail_2->text()
-                         )
+    ui->stackedWidgetAdmin->setCurrentIndex(4);
+}
 
-        ) {
-            QMessageBox::information(
-              this,
-              tr("McSuccess!"),
-              tr("User Info changed!")
-            );
+void MainWindow::on_sizeRegular_stateChanged(int arg1)
+{
+    if(ui->sizeRegular->isChecked() || arg1) {
+        ui->sizeSmall->setChecked(false);
+        ui->sizeMedium->setChecked(false);
+        ui->sizeLarge->setChecked(false);
 
-            //update the user info fields by pulling directly from DB
-            on_buttonUserInfo_clicked();
+        ui->sizeSmall->setEnabled(false);
+        ui->sizeMedium->setEnabled(false);
+        ui->sizeLarge->setEnabled(false);
 
-        } else {
+    } else {
+        ui->sizeSmall->setEnabled(true);
+        ui->sizeMedium->setEnabled(true);
+        ui->sizeLarge->setEnabled(true);
+    }
 
-            QMessageBox::critical(
-              this,
-              tr("McFail"),
-              tr("Could not update user info!")
-            );
-        }
+}
+
+void MainWindow::on_buttonCreateNewItem_clicked()
+{
+    //check if all required fields have some value
+    if( ui->lineItemName->text() == "" || ui->spinBoxItemPrice->value() == 0
+        || !(ui->sizeRegular->isChecked() || ui->sizeSmall->isChecked() || ui->sizeMedium->isChecked() || ui->sizeLarge->isChecked())
+    ) {
+
+        QMessageBox::critical(
+          this,
+          tr("McFail"),
+          tr("WE DO NOT ACCEPT EMPTY ITEMS!")
+        );
+
+    } else {
+
+    }
+}
+
+void MainWindow::on_buttonCancelNewItem_clicked()
+{
+    QMessageBox::information(
+      this,
+      tr("McOK"),
+      tr("Item not created!")
+    );
+
+    ui->stackedWidgetAdmin->setCurrentIndex(0);
 }

@@ -44,6 +44,22 @@ class MainWindow : public QMainWindow
     static QString selectedUserPlz;
     static QString selectedUserEmail;
 
+    //variables to store selected item name & size in the admin "list menu" functionality
+    static QString selectedItemName;
+    static QString selectedItemSize;
+
+    //variables to store new item info
+    static QString newItemCategory;
+    static QString newItemType;
+    static QString newItemName;
+    static QString newItemSizeReg;
+    static QString newItemSizeSmall;
+    static QString newItemSizeMed;
+    static QString newItemSizeLarge;
+
+
+
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -127,6 +143,18 @@ private slots:
     void on_buttonCancelInfoChangeUser_clicked();
 
     void on_buttonSubmitInfoChangeUser_clicked();
+
+    void on_tableListAllMenuItems_clicked(const QModelIndex &index);
+
+    void on_buttonDeleteItemAdmin_clicked();
+
+    void on_buttonAddItemAdmin_clicked();
+
+    void on_sizeRegular_stateChanged(int arg1);
+
+    void on_buttonCreateNewItem_clicked();
+
+    void on_buttonCancelNewItem_clicked();
 
 private:
     Ui::MainWindow *ui;

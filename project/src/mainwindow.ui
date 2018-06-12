@@ -40,7 +40,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="page0">
      <widget class="QWidget" name="formLayoutWidget">
@@ -418,7 +418,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="pageAllMenuItems">
        <widget class="QTableView" name="tableListAllMenuItems">
@@ -450,6 +450,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="buttonDeleteItemAdmin">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Delete Selected Item</string>
            </property>
@@ -730,6 +733,291 @@
            </property>
            <property name="text">
             <string>Submit Changes</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="pageAddNewItem">
+       <widget class="QWidget" name="formLayoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>49</y>
+          <width>401</width>
+          <height>291</height>
+         </rect>
+        </property>
+        <layout class="QFormLayout" name="formLayout_2">
+         <item row="0" column="0">
+          <widget class="QLabel" name="labelItemCategory">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Category: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="itemCategory">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <item>
+            <property name="text">
+             <string>Lunch</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Breakfast</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>32</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="labelItemType">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Type: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="itemType">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <item>
+            <property name="text">
+             <string>Main</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Side</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Beverage</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Dessert</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="2">
+          <spacer name="verticalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>32</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="labelItemName">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Name: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="lineItemName">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0" colspan="2">
+          <spacer name="verticalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>32</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="labelItemPrice">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Price: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0" colspan="2">
+          <spacer name="verticalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>32</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="8" column="0" colspan="2">
+          <widget class="QLabel" name="labelItemSizes">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Sizes:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QDoubleSpinBox" name="spinBoxItemPrice">
+           <property name="value">
+            <double>0.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget_9">
+        <property name="geometry">
+         <rect>
+          <x>189</x>
+          <y>349</y>
+          <width>401</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="sizeRegular">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="toolTip">
+            <UInt>0</UInt>
+           </property>
+           <property name="text">
+            <string>Regular</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="sizeSmall">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Small</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="sizeMedium">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Medium</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="sizeLarge">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Large</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget_10">
+        <property name="geometry">
+         <rect>
+          <x>189</x>
+          <y>420</y>
+          <width>401</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <item>
+          <widget class="QPushButton" name="buttonCancelNewItem">
+           <property name="text">
+            <string>TRASH IT!</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="buttonCreateNewItem">
+           <property name="text">
+            <string>COOK IT!</string>
            </property>
           </widget>
          </item>
