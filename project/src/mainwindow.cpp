@@ -23,10 +23,7 @@ QString MainWindow::selectedItemSize = "";
 QString MainWindow::newItemCategory = "";
 QString MainWindow::newItemType = "";
 QString MainWindow::newItemName = "";
-QString MainWindow::newItemSizeReg = "Regular";
-QString MainWindow::newItemSizeSmall = "Small";
-QString MainWindow::newItemSizeMed = "Medium";
-QString MainWindow::newItemSizeLarge = "Large";
+
 double MainWindow::newItemPrice = 0.0;
 
 
@@ -78,13 +75,6 @@ void MainWindow::on_buttonLogout_clicked()
 
 }
 
-void MainWindow::on_buttonPrevious_clicked()
-{
-    int pageIndex = ui->stackedWidget->currentIndex();
-    ui->stackedWidget->setCurrentIndex(pageIndex - 1);
-    ui->stackedWidget->update();
-
-}
 //----------------------------------------------
 
 

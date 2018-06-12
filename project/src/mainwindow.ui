@@ -40,7 +40,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page0">
      <widget class="QWidget" name="formLayoutWidget">
@@ -924,6 +924,9 @@
          </item>
          <item row="6" column="1">
           <widget class="QDoubleSpinBox" name="spinBoxItemPrice">
+           <property name="decimals">
+            <number>2</number>
+           </property>
            <property name="minimum">
             <double>0.000000000000000</double>
            </property>
@@ -1868,13 +1871,6 @@ V</string>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QPushButton" name="buttonPrevious">
-       <property name="text">
-        <string>&lt;- Prev</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="buttonLogout">
        <property name="text">
         <string>Logout</string>
@@ -1905,18 +1901,18 @@ V</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>lineNameFirst_3</tabstop>
-  <tabstop>lineNameLast_3</tabstop>
-  <tabstop>lineEmail_3</tabstop>
-  <tabstop>lineStreetName_3</tabstop>
-  <tabstop>lineStreetNumber_3</tabstop>
-  <tabstop>lineCityName_3</tabstop>
-  <tabstop>lineCityPLZ_3</tabstop>
-  <tabstop>buttonCancelChangesAdmin</tabstop>
-  <tabstop>buttonSubmitChangesAdmin</tabstop>
-  <tabstop>buttonCancelInfoChangeUser</tabstop>
-  <tabstop>buttonSubmitInfoChangeUser</tabstop>
-  <tabstop>buttonConnectDB</tabstop>
+  <tabstop>lineNameFirst</tabstop>
+  <tabstop>lineNameLast</tabstop>
+  <tabstop>lineEmail</tabstop>
+  <tabstop>lineUsername</tabstop>
+  <tabstop>linePassword</tabstop>
+  <tabstop>lineStreetName</tabstop>
+  <tabstop>lineStreetNumber</tabstop>
+  <tabstop>lineCityName</tabstop>
+  <tabstop>lineCityPLZ</tabstop>
+  <tabstop>buttonClearUserFields</tabstop>
+  <tabstop>buttonSubmitNewUser</tabstop>
+  <tabstop>buttonToLoginNewUserSuccess</tabstop>
   <tabstop>buttonLogin</tabstop>
   <tabstop>buttonQuit_3</tabstop>
   <tabstop>buttonListAllMenu</tabstop>
@@ -1949,15 +1945,15 @@ V</string>
   <tabstop>tableViewPrevOrderTimestamps</tabstop>
   <tabstop>lineUser</tabstop>
   <tabstop>linePass</tabstop>
-  <tabstop>lineStreetNumber</tabstop>
-  <tabstop>lineNameLast</tabstop>
-  <tabstop>lineNameFirst</tabstop>
-  <tabstop>lineUsername</tabstop>
-  <tabstop>lineStreetName</tabstop>
-  <tabstop>lineCityName</tabstop>
-  <tabstop>lineEmail</tabstop>
-  <tabstop>linePassword</tabstop>
-  <tabstop>lineCityPLZ</tabstop>
+  <tabstop>lineCityPLZ_3</tabstop>
+  <tabstop>lineNameLast_3</tabstop>
+  <tabstop>buttonCancelInfoChangeUser</tabstop>
+  <tabstop>lineStreetName_3</tabstop>
+  <tabstop>lineCityName_3</tabstop>
+  <tabstop>buttonCancelChangesAdmin</tabstop>
+  <tabstop>lineEmail_3</tabstop>
+  <tabstop>lineStreetNumber_3</tabstop>
+  <tabstop>buttonSubmitChangesAdmin</tabstop>
   <tabstop>buttonQuit_4</tabstop>
   <tabstop>lineDatenbankName</tabstop>
   <tabstop>linePassDB</tabstop>
@@ -1967,10 +1963,9 @@ V</string>
   <tabstop>buttonNewUser</tabstop>
   <tabstop>buttonLoginStart</tabstop>
   <tabstop>lineServerDB</tabstop>
-  <tabstop>buttonClearUserFields</tabstop>
-  <tabstop>buttonSubmitNewUser</tabstop>
-  <tabstop>buttonToLoginNewUserSuccess</tabstop>
-  <tabstop>buttonPrevious</tabstop>
+  <tabstop>buttonSubmitInfoChangeUser</tabstop>
+  <tabstop>lineNameFirst_3</tabstop>
+  <tabstop>buttonConnectDB</tabstop>
   <tabstop>buttonLogout</tabstop>
   <tabstop>buttonQuit</tabstop>
   <tabstop>tableViewOrderSummary</tabstop>
@@ -1988,6 +1983,16 @@ V</string>
   <tabstop>lineEmail_2</tabstop>
   <tabstop>lineCityName_2</tabstop>
   <tabstop>lineCityPLZ_2</tabstop>
+  <tabstop>itemCategory</tabstop>
+  <tabstop>itemType</tabstop>
+  <tabstop>lineItemName</tabstop>
+  <tabstop>sizeLarge</tabstop>
+  <tabstop>sizeMedium</tabstop>
+  <tabstop>sizeSmall</tabstop>
+  <tabstop>sizeRegular</tabstop>
+  <tabstop>spinBoxItemPrice</tabstop>
+  <tabstop>buttonCancelNewItem</tabstop>
+  <tabstop>buttonCreateNewItem</tabstop>
  </tabstops>
  <resources/>
  <connections>

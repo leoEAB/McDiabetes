@@ -52,10 +52,6 @@ class MainWindow : public QMainWindow
     static QString newItemCategory;
     static QString newItemType;
     static QString newItemName;
-    static QString newItemSizeReg;
-    static QString newItemSizeSmall;
-    static QString newItemSizeMed;
-    static QString newItemSizeLarge;
     static double newItemPrice;
 
 
@@ -67,8 +63,7 @@ public:
     bool isConnected(); //returns true when DB connection successful
 
 private slots:
-    //Previous button
-    void on_buttonPrevious_clicked();
+
     //timeFunction
     void updateTimeLabel();
 
