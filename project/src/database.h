@@ -356,8 +356,8 @@ public:
         tableViewModel->setHeaderData(4, Qt::Horizontal, "price");
 
         table->setModel(tableViewModel);
-        table->resizeRowsToContents();
         table->resizeColumnToContents(2);
+        table->resizeRowsToContents();
         table->setAlternatingRowColors(true);
     }
 
@@ -446,6 +446,29 @@ public:
         } else {
             return false;
         }
+    }
+
+    void addNewItem(QString itemCategory,
+                    QString itemType,
+                    QString itemName,
+                    QString itemSize,
+                    double itemPrice) {
+
+        QSqlQuery newItemQuery;
+
+        newItemQuery.prepare("CALL addNewItem(:category,"
+                             "                :type,"
+                             "                :name,"
+                             "                :size,"
+                             "                :price)");
+        newItemQuery.bindValue(":category", itemCategory);
+        newItemQuery.bindValue(":type", itemType);
+        newItemQuery.bindValue(":name", itemName);
+        newItemQuery.bindValue(":size", itemSize);
+        newItemQuery.bindValue(":price", itemPrice);
+
+        newItemQuery.exec();
+
     }
 
 //---------------------------------------------------------------------------------------------

@@ -23,10 +23,12 @@ QString MainWindow::selectedItemSize = "";
 QString MainWindow::newItemCategory = "";
 QString MainWindow::newItemType = "";
 QString MainWindow::newItemName = "";
-QString MainWindow::newItemSizeReg = "";
-QString MainWindow::newItemSizeSmall = "";
-QString MainWindow::newItemSizeMed = "";
-QString MainWindow::newItemSizeLarge = "";
+QString MainWindow::newItemSizeReg = "Regular";
+QString MainWindow::newItemSizeSmall = "Small";
+QString MainWindow::newItemSizeMed = "Medium";
+QString MainWindow::newItemSizeLarge = "Large";
+double MainWindow::newItemPrice = 0.0;
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -750,6 +752,50 @@ void MainWindow::on_buttonCreateNewItem_clicked()
 
     } else {
 
+        newItemCategory = ui->itemCategory->currentText();
+        newItemType = ui->itemType->currentText();
+        newItemName = ui->lineItemName->text();
+        newItemPrice = ui->spinBoxItemPrice->value();
+
+        if(ui->sizeRegular->isChecked()) {
+            db->addNewItem(newItemCategory,
+                           newItemType,
+                           newItemName,
+                           "Regular",
+                           newItemPrice);
+        };
+
+        if(ui->sizeSmall->isChecked()) {
+            db->addNewItem(newItemCategory,
+                           newItemType,
+                           newItemName,
+                           "Small",
+                           newItemPrice);
+        };
+
+        if(ui->sizeMedium->isChecked()) {
+            db->addNewItem(newItemCategory,
+                           newItemType,
+                           newItemName,
+                           "Medium",
+                           newItemPrice);
+        };
+
+        if(ui->sizeLarge->isChecked()) {
+            db->addNewItem(newItemCategory,
+                           newItemType,
+                           newItemName,
+                           "Large",
+                           newItemPrice);
+        };
+
+        QMessageBox::information(
+          this,
+          tr("McOK"),
+          tr("ITEM CREATED YO!")
+        );
+
+        on_buttonListAllMenu_clicked();
     }
 }
 

@@ -56,7 +56,7 @@ class MainWindow : public QMainWindow
     static QString newItemSizeSmall;
     static QString newItemSizeMed;
     static QString newItemSizeLarge;
-
+    static double newItemPrice;
 
 
 

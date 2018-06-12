@@ -131,9 +131,26 @@ CREATE PROCEDURE deleteMenuItem( 	IN itemName VARCHAR(50),
 DELIMITER ;
 
 
+DELIMITER |
+CREATE PROCEDURE addNewItem(	IN itemCategory varchar(20),
+								IN itemType varchar(20),
+								IN itemName varchar(50),
+								IN itemSize varchar(20),
+								IN itemPrice dec(5,2)
+							)
+	BEGIN
+		
+        INSERT INTO items (category, type, name, size , price) VALUES (itemCategory, itemType, itemName, itemSize, itemPrice);
+    END;
+|
+DELIMITER ;
+
 -- tests
 -- CALL addToCart("mihi", "Fries", "small");
 
 -- CALL completeOrder("mihi94");
 -- CALL completeOrder("user");
 
+CALL addNewItem("brekkie", "drank", "liquid_shit", "huge", 45.0);
+
+select * from items where items.name = "liquid_shit";
