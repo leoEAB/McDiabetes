@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     QSplashScreen *splash = new QSplashScreen;
-    splash->setPixmap(QPixmap("C:/Users/Micha/Dropbox/HTW/SoSe18/DB/Projekt_DB/qt/McDiabetes/project/Logo/logo.png"));
-    //splash->show();
+    splash->setPixmap(QPixmap(":/images/img/logo.png"));
+    splash->show();
 
     MainWindow w;
 

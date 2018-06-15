@@ -151,6 +151,3 @@ DELIMITER ;
 -- CALL completeOrder("mihi94");
 -- CALL completeOrder("user");
 
-CALL addNewItem("brekkie", "drank", "liquid_shit", "huge", 45.0);
-
-select * from items where items.name = "liquid_shit";
