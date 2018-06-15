@@ -26,6 +26,9 @@ QString MainWindow::newItemName = "";
 
 double MainWindow::newItemPrice = 0.0;
 
+int MainWindow::hour = 0;
+int MainWindow::minute = 0;
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -365,14 +368,122 @@ void MainWindow::on_buttonDeleteItemAdmin_clicked()
         );
     };
 }
+    //NEW ITEM
+void MainWindow::on_buttonAddItemAdmin_clicked()
+{
+    ui->stackedWidgetAdmin->setCurrentIndex(4);
+}
+
+void MainWindow::on_sizeRegular_stateChanged(int arg1)
+{
+    if(ui->sizeRegular->isChecked() || arg1) {
+        ui->sizeSmall->setChecked(false);
+        ui->sizeMedium->setChecked(false);
+        ui->sizeLarge->setChecked(false);
+
+        ui->sizeSmall->setEnabled(false);
+        ui->sizeMedium->setEnabled(false);
+        ui->sizeLarge->setEnabled(false);
+
+    } else {
+        ui->sizeSmall->setEnabled(true);
+        ui->sizeMedium->setEnabled(true);
+        ui->sizeLarge->setEnabled(true);
+    }
+
+}
+
+void MainWindow::on_buttonCreateNewItem_clicked()
+{
+    //check if all required fields have some value
+    if( ui->lineItemName->text() == "" || ui->spinBoxItemPrice->value() == 0
+        || !(ui->sizeRegular->isChecked() || ui->sizeSmall->isChecked() || ui->sizeMedium->isChecked() || ui->sizeLarge->isChecked())
+    ) {
+
+        QMessageBox::critical(
+          this,
+          tr("McFail"),
+          tr("WE DO NOT ACCEPT EMPTY ITEMS!")
+        );
+
+    } else {
+
+        newItemCategory = ui->itemCategory->currentText();
+        newItemType = ui->itemType->currentText();
+        newItemName = ui->lineItemName->text();
+        newItemPrice = ui->spinBoxItemPrice->value();
+
+        if(ui->sizeRegular->isChecked()) {
+            db->addNewItem(newItemCategory,
+                           newItemType,
+                           newItemName,
+                           "Regular",
+                           newItemPrice);
+        };
+
+        if(ui->sizeSmall->isChecked()) {
+            db->addNewItem(newItemCategory,
+                           newItemType,
+                           newItemName,
+                           "Small",
+                           newItemPrice);
+        };
+
+        if(ui->sizeMedium->isChecked()) {
+            db->addNewItem(newItemCategory,
+                           newItemType,
+                           newItemName,
+                           "Medium",
+                           newItemPrice);
+        };
+
+        if(ui->sizeLarge->isChecked()) {
+            db->addNewItem(newItemCategory,
+                           newItemType,
+                           newItemName,
+                           "Large",
+                           newItemPrice);
+        };
+
+        QMessageBox::information(
+          this,
+          tr("McOK"),
+          tr("ITEM CREATED YO!")
+        );
+
+        on_buttonListAllMenu_clicked();
+    }
+}
+
+void MainWindow::on_buttonCancelNewItem_clicked()
+{
+    QMessageBox::information(
+      this,
+      tr("McOK"),
+      tr("Item not created!")
+    );
+
+    ui->stackedWidgetAdmin->setCurrentIndex(0);
+}
 
 //-------------------------------------------------
 
 
 //USER SCREEN ----------------------------------
+void MainWindow::setTime(){
+    hour = ui->timeEditSetTime->time().hour();
+    minute = ui->timeEditSetTime->time().minute();
+}
+
+int MainWindow::getHour() {
+    return hour;
+}
 
 void MainWindow::on_buttonNewOrder_clicked()
 {
+    //set the correct time immediately
+    setTime();
+
     //firstly, show the widget!
     ui->stackedWidgetUser->setHidden(false);
     //set the page to the new order page
@@ -380,10 +491,14 @@ void MainWindow::on_buttonNewOrder_clicked()
     //delete previous cart items (cart is only temporary, orderInfo is the orders database)
     db->clearCart(currentUser, ui->tableViewCartUser);
 
-    db->listMains(ui->tableViewAllMains);
-    db->listSides(ui->tableViewAllSides);
-    db->listDrinks(ui->tableViewAllDrinks);
-    db->listDesserts(ui->tableViewAllDesserts);
+    db->listMains(ui->tableViewAllMains, getHour());
+    db->listSides(ui->tableViewAllSides, getHour());
+    db->listDrinks(ui->tableViewAllDrinks, getHour());
+    db->listDesserts(ui->tableViewAllDesserts, getHour());
+
+
+
+
 
 }
 
@@ -518,7 +633,12 @@ void MainWindow::updateTimeLabel(){
     ui->timeEditSetTime->setTime(currentTime.time());
 }
 
-//TO-DO
+void MainWindow::on_pushButtonSetTime_clicked()
+{
+    setTime();
+    on_buttonNewOrder_clicked();
+}
+
 void MainWindow::on_checkBoxSetTime_stateChanged(int arg1)
 {
     if(ui->checkBoxEditUserInfo->isChecked() || arg1) {
@@ -530,6 +650,11 @@ void MainWindow::on_checkBoxSetTime_stateChanged(int arg1)
         ui->labelSetTime->setEnabled(false);
         ui->timeEditSetTime->setEnabled(false);
         ui->pushButtonSetTime->setEnabled(false);
+
+        //revert time to actual current time
+        updateTimeLabel();
+        //update tables
+        on_buttonNewOrder_clicked();
     }
 }
 
@@ -613,11 +738,11 @@ void MainWindow::on_buttonConfirmOrder_clicked()
 {
 
     if(db->completeOrder(currentUser)){
-        QMessageBox::information(
-          this,
-          tr("McSuccess"),
-          tr("Sit back and relax. Your order is on its way!")
-        );
+        QMessageBox order;
+        //order.setText("McSuccess! Order is on its way!");
+        order.setStandardButtons(QMessageBox::Ok);
+        order.setIconPixmap(QPixmap(":images/img/orderDone.png"));
+        order.exec();
 
         db->listAllOrdersUser(currentUser, ui->tableViewPrevOrderTimestamps);
         ui->stackedWidgetUser->setCurrentIndex(2);
@@ -703,99 +828,6 @@ void MainWindow::on_buttonToLoginNewUserSuccess_clicked()
 
 
 
-void MainWindow::on_buttonAddItemAdmin_clicked()
-{
-    ui->stackedWidgetAdmin->setCurrentIndex(4);
-}
 
-void MainWindow::on_sizeRegular_stateChanged(int arg1)
-{
-    if(ui->sizeRegular->isChecked() || arg1) {
-        ui->sizeSmall->setChecked(false);
-        ui->sizeMedium->setChecked(false);
-        ui->sizeLarge->setChecked(false);
 
-        ui->sizeSmall->setEnabled(false);
-        ui->sizeMedium->setEnabled(false);
-        ui->sizeLarge->setEnabled(false);
 
-    } else {
-        ui->sizeSmall->setEnabled(true);
-        ui->sizeMedium->setEnabled(true);
-        ui->sizeLarge->setEnabled(true);
-    }
-
-}
-
-void MainWindow::on_buttonCreateNewItem_clicked()
-{
-    //check if all required fields have some value
-    if( ui->lineItemName->text() == "" || ui->spinBoxItemPrice->value() == 0
-        || !(ui->sizeRegular->isChecked() || ui->sizeSmall->isChecked() || ui->sizeMedium->isChecked() || ui->sizeLarge->isChecked())
-    ) {
-
-        QMessageBox::critical(
-          this,
-          tr("McFail"),
-          tr("WE DO NOT ACCEPT EMPTY ITEMS!")
-        );
-
-    } else {
-
-        newItemCategory = ui->itemCategory->currentText();
-        newItemType = ui->itemType->currentText();
-        newItemName = ui->lineItemName->text();
-        newItemPrice = ui->spinBoxItemPrice->value();
-
-        if(ui->sizeRegular->isChecked()) {
-            db->addNewItem(newItemCategory,
-                           newItemType,
-                           newItemName,
-                           "Regular",
-                           newItemPrice);
-        };
-
-        if(ui->sizeSmall->isChecked()) {
-            db->addNewItem(newItemCategory,
-                           newItemType,
-                           newItemName,
-                           "Small",
-                           newItemPrice);
-        };
-
-        if(ui->sizeMedium->isChecked()) {
-            db->addNewItem(newItemCategory,
-                           newItemType,
-                           newItemName,
-                           "Medium",
-                           newItemPrice);
-        };
-
-        if(ui->sizeLarge->isChecked()) {
-            db->addNewItem(newItemCategory,
-                           newItemType,
-                           newItemName,
-                           "Large",
-                           newItemPrice);
-        };
-
-        QMessageBox::information(
-          this,
-          tr("McOK"),
-          tr("ITEM CREATED YO!")
-        );
-
-        on_buttonListAllMenu_clicked();
-    }
-}
-
-void MainWindow::on_buttonCancelNewItem_clicked()
-{
-    QMessageBox::information(
-      this,
-      tr("McOK"),
-      tr("Item not created!")
-    );
-
-    ui->stackedWidgetAdmin->setCurrentIndex(0);
-}

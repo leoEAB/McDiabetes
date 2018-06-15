@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
     splash->show();
 
     MainWindow w;
+    w.setWindowIcon(QIcon(":images/img/logoSmallest.png"));
 
     QTimer::singleShot(2500, splash, SLOT(close()));
     QTimer::singleShot(2500, &w, SLOT(show()));

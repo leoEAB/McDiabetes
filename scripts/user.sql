@@ -15,14 +15,14 @@ create table user (
 );
 
 create table person (
-	userName varchar(20),
-	firstName varchar(20),
-    lastName varchar(20),
-    email varchar(30) unique primary key,
-    street varchar(20),
-    streetNr int,
-	plz varchar(6),
-    city varchar(20),
+	userName varchar(20) not null,
+	firstName varchar(20) not null,
+    lastName varchar(20) not null,
+    email varchar(30) not null unique primary key,
+    street varchar(20) not null,
+    streetNr int not null,
+	plz varchar(6) not null,
+    city varchar(20) not null,
 
     FOREIGN KEY (userName) REFERENCES user(userName) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -33,6 +33,7 @@ create table cart (
     name varchar(50),
     size varchar(20),
 	price dec(5,2),
+    rabatt dec(2,1) DEFAULT 1.0, -- 100% vom Preis
     
 	FOREIGN KEY (userName) REFERENCES user(userName) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -73,8 +74,6 @@ create table orderContents(
 
 insert into user values ("mihi", "mihi", "a");
 insert into user values ("leo", "leo", "a");
-insert into user values ("user", "user", "u");
-insert into user values ("user1", "user1", "u");
 
 select * from user left outer join person on user.userName = person.userName;
 

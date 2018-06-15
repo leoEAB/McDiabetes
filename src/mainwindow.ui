@@ -1097,7 +1097,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pageNewOrderUser">
        <widget class="QTabWidget" name="tabWidgetMenuUser">
@@ -1901,17 +1901,15 @@ V</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>lineNameFirst</tabstop>
-  <tabstop>lineNameLast</tabstop>
-  <tabstop>lineEmail</tabstop>
-  <tabstop>lineUsername</tabstop>
-  <tabstop>linePassword</tabstop>
-  <tabstop>lineStreetName</tabstop>
-  <tabstop>lineStreetNumber</tabstop>
-  <tabstop>lineCityName</tabstop>
-  <tabstop>lineCityPLZ</tabstop>
-  <tabstop>buttonClearUserFields</tabstop>
-  <tabstop>buttonSubmitNewUser</tabstop>
+  <tabstop>lineEmail_2</tabstop>
+  <tabstop>lineUsername_2</tabstop>
+  <tabstop>lineStreetName_2</tabstop>
+  <tabstop>lineStreetNumber_2</tabstop>
+  <tabstop>lineCityName_2</tabstop>
+  <tabstop>lineCityPLZ_2</tabstop>
+  <tabstop>buttonCancelInfoChangeUser</tabstop>
+  <tabstop>buttonSubmitInfoChangeUser</tabstop>
+  <tabstop>itemCategory</tabstop>
   <tabstop>buttonToLoginNewUserSuccess</tabstop>
   <tabstop>buttonLogin</tabstop>
   <tabstop>buttonQuit_3</tabstop>
@@ -1943,11 +1941,12 @@ V</string>
   <tabstop>buttonToCheckout</tabstop>
   <tabstop>tableViewPrevOrderInfo</tabstop>
   <tabstop>tableViewPrevOrderTimestamps</tabstop>
+  <tabstop>buttonSubmitNewUser</tabstop>
   <tabstop>lineUser</tabstop>
   <tabstop>linePass</tabstop>
   <tabstop>lineCityPLZ_3</tabstop>
   <tabstop>lineNameLast_3</tabstop>
-  <tabstop>buttonCancelInfoChangeUser</tabstop>
+  <tabstop>buttonCancelNewItem</tabstop>
   <tabstop>lineStreetName_3</tabstop>
   <tabstop>lineCityName_3</tabstop>
   <tabstop>buttonCancelChangesAdmin</tabstop>
@@ -1963,7 +1962,7 @@ V</string>
   <tabstop>buttonNewUser</tabstop>
   <tabstop>buttonLoginStart</tabstop>
   <tabstop>lineServerDB</tabstop>
-  <tabstop>buttonSubmitInfoChangeUser</tabstop>
+  <tabstop>buttonCreateNewItem</tabstop>
   <tabstop>lineNameFirst_3</tabstop>
   <tabstop>buttonConnectDB</tabstop>
   <tabstop>buttonLogout</tabstop>
@@ -1973,26 +1972,27 @@ V</string>
   <tabstop>buttonCancelOrder</tabstop>
   <tabstop>buttonEditSelectedUser</tabstop>
   <tabstop>buttonDeleteSelectedUser</tabstop>
-  <tabstop>lineStreetName_2</tabstop>
-  <tabstop>lineNameFirst_2</tabstop>
+  <tabstop>sizeMedium</tabstop>
+  <tabstop>lineNameLast_2</tabstop>
   <tabstop>checkBoxEditUserInfo</tabstop>
   <tabstop>lineUsername_3</tabstop>
-  <tabstop>lineUsername_2</tabstop>
-  <tabstop>lineStreetNumber_2</tabstop>
-  <tabstop>lineNameLast_2</tabstop>
-  <tabstop>lineEmail_2</tabstop>
-  <tabstop>lineCityName_2</tabstop>
-  <tabstop>lineCityPLZ_2</tabstop>
-  <tabstop>itemCategory</tabstop>
-  <tabstop>itemType</tabstop>
-  <tabstop>lineItemName</tabstop>
   <tabstop>sizeLarge</tabstop>
-  <tabstop>sizeMedium</tabstop>
   <tabstop>sizeSmall</tabstop>
+  <tabstop>lineNameFirst_2</tabstop>
+  <tabstop>lineItemName</tabstop>
   <tabstop>sizeRegular</tabstop>
   <tabstop>spinBoxItemPrice</tabstop>
-  <tabstop>buttonCancelNewItem</tabstop>
-  <tabstop>buttonCreateNewItem</tabstop>
+  <tabstop>itemType</tabstop>
+  <tabstop>lineNameFirst</tabstop>
+  <tabstop>lineNameLast</tabstop>
+  <tabstop>lineEmail</tabstop>
+  <tabstop>lineUsername</tabstop>
+  <tabstop>linePassword</tabstop>
+  <tabstop>lineStreetName</tabstop>
+  <tabstop>lineStreetNumber</tabstop>
+  <tabstop>lineCityName</tabstop>
+  <tabstop>lineCityPLZ</tabstop>
+  <tabstop>buttonClearUserFields</tabstop>
  </tabstops>
  <resources/>
  <connections>

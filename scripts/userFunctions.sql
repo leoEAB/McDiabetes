@@ -27,14 +27,14 @@ CREATE FUNCTION getUserData(username VARCHAR(20), what VARCHAR(20)) RETURNS VARC
 BEGIN
 	RETURN (SELECT 
 				CASE what
-					WHEN "userName" THEN userName
-					WHEN "firstName" THEN firstName
-					WHEN "lastName" THEN lastName
-					WHEN "email" THEN email
-					WHEN "street" THEN street
-                    WHEN "streetNr" THEN streetNr
-					WHEN "plz" THEN plz
-					WHEN "city" THEN city
+					WHEN "userName" 	THEN userName
+					WHEN "firstName" 	THEN firstName
+					WHEN "lastName" 	THEN lastName
+					WHEN "email" 		THEN email
+					WHEN "street" 		THEN street
+                    WHEN "streetNr" 	THEN streetNr
+					WHEN "plz" 			THEN plz
+					WHEN "city" 		THEN city
 				END
 			FROM person WHERE person.userName = username);
 END;
@@ -44,5 +44,5 @@ DELIMITER ;
 -- test:
 -- select isAdmin("mihi");
 -- select isAdmin("user");
-select getUserData("mihi94", "streetNr");
+-- select getUserData("mihi94", "streetNr");
 

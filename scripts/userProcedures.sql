@@ -5,6 +5,8 @@ drop procedure if exists completeOrder;
 drop procedure if exists updateUserInfo;
 drop procedure if exists deleteUser;
 drop procedure if exists deleteMenuItem;
+drop procedure if exists addNewItem;
+drop procedure if exists isMenu;
 
 
 DELIMITER |
@@ -63,7 +65,7 @@ CREATE PROCEDURE completeOrder( IN username VARCHAR(20))
 								city
 								)
 		SELECT 	U.userName,
-				SUM(C.price),
+				SUM(C.price * C.rabatt),
 				P.firstName,
 				P.lastName,
 				P.email,
@@ -145,9 +147,22 @@ CREATE PROCEDURE addNewItem(	IN itemCategory varchar(20),
 |
 DELIMITER ;
 
+
+DELIMITER |
+CREATE PROCEDURE isMenu ()
+BEGIN
+	-- SELECT COUNT(DISTINCT type, size) AS Menu FROM cart WHERE cart.type != 'Main' AND cart.size NOT LIKE '%egular';
+END;
+|
+DELIMITER ;
+
+
+-- CALL isMenu();
+
 -- tests
 -- CALL addToCart("mihi", "Fries", "small");
 
 -- CALL completeOrder("mihi94");
 -- CALL completeOrder("user");
+
 
